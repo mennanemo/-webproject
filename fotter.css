@@ -1,0 +1,113 @@
+.parent {
+    display: flex;
+    background-color: #D1601F;
+    height: 300px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+   
+}
+.logo {
+    font-size: 40px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.hook {
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    bottom: 220px;
+}
+
+.brief {
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: left;
+    line-height: 1.5;
+    width: 400px;
+    height: 200px;
+    position: relative;
+    left: 250px;
+    top: -5px;
+    
+    
+
+
+}
+.hr {
+    position: absolute;
+    bottom: 150px;
+    width: 100%;
+    
+}
+
+.hr hr {
+    border: none;
+    border-top: 2px solid black;
+}
+
+.search {
+    position: absolute;
+    bottom: 100px;
+    border-radius: 45px;
+    left: 30px;
+    display: flex;
+    input[type="search"] {
+    -webkit-appearance: none; 
+    appearance: none;
+    border-radius: 20px;
+    }
+    
+
+}
+
+.search_button {
+    position: absolute;
+    bottom: 100px;
+    left: 200px;
+
+}
+
+.list1 {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+    left: 850px;
+    color: #D1601F;
+    text-decoration: none;
+    
+    
+    
+}
+
+.list2 {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+    left: 700px;
+    color: #D1601F;
+
+    
+    
+}
+
+.list3 {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+    left: 600px;
+    color: #D1601F;
+    
+    
+    
+}
+ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+ul li a:hover {
+    color: blue;
+}
