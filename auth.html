@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">kroww</h1>
+            <div class="nav-right" id="navRight">
+                <button class="logout-btn" id="logoutBtn" style="display: none;">Logout</button>
+                <span class="user-info" id="userInfo" style="display: none;"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sign Up Page -->
+        <div class="auth-page" id="signupPage">
+            <div class="auth-card">
+                <h2>Create Account</h2>
+                <form id="signupForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" required>
+                        <span class="error" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" required>
+                        <span class="error" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPhone">Phone</label>
+                        <input type="tel" id="signupPhone" required>
+                        <span class="error" id="phoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="password-strength-label" id="passwordStrength"></div>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="signupPassword" required>
+                            <button type="button" class="toggle-password" data-target="signupPassword">👁️</button>
+                        </div>
+                        <span class="error" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="confirmPassword" required>
+                            <button type="button" class="toggle-password" data-target="confirmPassword">👁️</button>
+                        </div>
+                        <span class="error" id="confirmError"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+
+                <p class="toggle-text">Already have an account? <a href="#" id="toLogin">Login here</a></p>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div class="auth-page" id="loginPage" style="display: none;">
+            <div class="auth-card">
+                <h2>Login</h2>
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                        <span class="error" id="loginEmailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="loginPassword" required>
+                            <button type="button" class="toggle-password" data-target="loginPassword">👁️</button>
+                        </div>
+                        <span class="error" id="loginPasswordError"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <p class="toggle-text">Don't have an account? <a href="#" id="toSignup">Sign up here</a></p>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="auth-page" id="dashboardPage" style="display: none;">
+            <div class="dashboard-card">
+                <h2>Welcome to Dashboard</h2>
+                <div class="user-details">
+                    <p><strong>Name:</strong> <span id="dashboardName"></span></p>
+                    <p><strong>Email:</strong> <span id="dashboardEmail"></span></p>
+                    <p><strong>Phone:</strong> <span id="dashboardPhone"></span></p>
+                    <p><strong>Role:</strong> <span id="dashboardRole"></span></p>
+                </div>
+
+                <div id="adminPanel" style="display: none;" class="admin-section">
+                    <h3>Admin Panel</h3>
+                    <button class="btn btn-secondary" id="viewUsersBtn">View All Users</button>
+                </div>
+
+                <div id="usersListContainer" style="display: none;">
+                    <h3>Registered Users</h3>
+                    <table class="users-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+
+                <button class="btn btn-danger" id="logoutDashboardBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="message" id="successMessage">
+        <div class="message-content success">
+            <span id="messageText"></span>
+            <button class="close-message" onclick="closeMessage()">×</button>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="message" id="errorMessage">
+        <div class="message-content error">
+            <span id="errorText"></span>
+            <button class="close-message" onclick="closeMessage()">×</button>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
