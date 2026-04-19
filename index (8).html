@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search - Kroww</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    #main-nav {
+      background: #70191D !important;
+      border-bottom: none !important;
+      backdrop-filter: none !important;
+    }
+    #main-nav .logo {
+      color: #FECD6D !important;
+    }
+    #main-nav .logo-dot {
+      background: #FECD6D !important;
+    }
+    #main-nav .logo-dot::after {
+      background: #FECD6D !important;
+    }
+    #main-nav .nav-links a {
+      color: rgba(254,205,109,0.75) !important;
+    }
+    #main-nav .nav-links a:hover {
+      color: #FECD6D !important;
+    }
+    #main-nav .nav-links a::after {
+      background: #FECD6D !important;
+    }
+    #main-nav .btn-ghost {
+      color: #FECD6D !important;
+      border-color: rgba(254,205,109,0.4) !important;
+      background: transparent !important;
+    }
+    #main-nav .btn-ghost:hover {
+      background: rgba(254,205,109,0.12) !important;
+    }
+    #main-nav .btn-primary {
+      background: #D1601F !important;
+      color: #fff !important;
+    }
+    #main-nav .btn-primary:hover {
+      background: #b85218 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="main-nav">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#" onclick="openModal();return false;">Post a need</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="auth.html">Sign In</a>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ghost" onclick="openModal()">Post now</button>
+      <button class="btn-primary" onclick="document.getElementById('search-input').focus()">Find people</button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-orb o1"></div>
+    <div class="hero-orb o2"></div>
+    <div class="hero-orb o3"></div>
+    <div class="hero-badge"><span class="badge-dot"></span> Short-term freelance, done right</div>
+    <h1>Find work or hire someone <span class="accent">fast</span></h1>
+    <p>Search by skill or job title — see matching profiles with their name and skills instantly.</p>
+    <div class="search-wrap">
+      <input id="search-input" type="text" placeholder='Try "Artist", "C++", "Python"...'>
+      <button class="btn-search" onclick="doSearch()">Search</button>
+    </div>
+    <div class="hero-tags">
+      <span class="hero-tag">Artist</span>
+      <span class="hero-tag">C++</span>
+      <span class="hero-tag">Python</span>
+      <span class="hero-tag">Ethical Hacker</span>
+      <span class="hero-tag">Game Developer</span>
+    </div>
+  </section>
+
+  <div class="stats-row">
+    <div class="stat-cell" data-delay="0">  <span class="stat-num">0</span><div class="stat-label">Freelancers registered</div></div>
+    <div class="stat-cell" data-delay="150"><span class="stat-num">0</span><div class="stat-label">Jobs posted this week</div></div>
+    <div class="stat-cell" data-delay="300"><span class="stat-num">0</span><div class="stat-label">Successful matches</div></div>
+  </div>
+
+  <section class="results-section" id="results-section">
+    <div class="results-bar">
+      <div class="results-label" id="results-label">Results</div>
+      <div class="results-meta">
+        <span class="results-count" id="results-count"></span>
+        <button class="clear-btn" onclick="clearSearch()">✕ Clear</button>
+      </div>
+    </div>
+    <div class="result-list" id="result-list"></div>
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <p>No profiles match that search.<br>Try a different skill or name.</p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-orb o1"></div>
+    <div class="cta-orb o2"></div>
+    <h2>Ready to get started?</h2>
+    <p>Post what you need or find your next short-term gig in minutes.</p>
+    <div class="cta-btns">
+      <button class="btn-yellow" onclick="openModal()">Post a need</button>
+      <button class="btn-outline-yellow" onclick="document.getElementById('search-input').focus()">Search profiles</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">kroww</div>
+        <p class="footer-desc">Connecting skilled freelancers with people who need work done — safely and simply.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Freelancer Profiles</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="auth.html">Sign In / Sign Up</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chat.html">Messages</a>
+        <a href="payment.html">Payments</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">How It Works</a>
+        <a href="#">Trust &amp; Safety</a>
+        <a href="#">Help Centre</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kroww. All rights reserved.</span>
+      <span>Terms · Privacy · Cookies</span>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">Create a post</div>
+      <label>I want to...</label>
+      <div class="type-toggle">
+        <button class="type-btn active-hire" id="btn-hire" onclick="setType('hire')">Hire someone</button>
+        <button class="type-btn"             id="btn-work" onclick="setType('work')">Find work</button>
+      </div>
+      <label>Your name</label>
+      <input type="text" id="p-name" placeholder="e.g. Ahmed Hassan">
+      <label>Job title / what you need</label>
+      <input type="text" id="p-title" placeholder="e.g. Need a video editor for 2 days">
+      <label>Description</label>
+      <textarea id="p-desc" rows="3" placeholder="Describe what you need or offer..."></textarea>
+      <label>Skills (comma separated)</label>
+      <input type="text" id="p-skills" placeholder="e.g. Premiere Pro, After Effects">
+      <label>Location</label>
+      <input type="text" id="p-location" placeholder="e.g. Cairo · Remote">
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-post"   onclick="submitPost()">Publish post</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="index.js"></script>
+</body>
+</html>
