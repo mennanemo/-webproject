@@ -50,7 +50,15 @@ async function init() {
 
 function parseSkills(skillsArr) {
   if (!skillsArr || !skillsArr.length) return [];
-  return skillsArr[0].split(',').map(s => s.trim()).filter(Boolean);
+  
+  const result = [];
+  skillsArr.forEach(item => {
+    String(item).split(',').forEach(s => {
+      const trimmed = s.trim();
+      if (trimmed) result.push(trimmed);
+    });
+  });
+  return result;
 }
 
 

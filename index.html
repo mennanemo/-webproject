@@ -3,19 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kroww — Find Short-Term Freelance Work</title>
+  <title>Search - Kroww</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="global.css">
   <link rel="stylesheet" href="index.css">
+  <style>
+    #main-nav {
+      background: #70191D !important;
+      border-bottom: none !important;
+      backdrop-filter: none !important;
+    }
+    #main-nav .logo {
+      color: #FECD6D !important;
+    }
+    #main-nav .logo-dot {
+      background: #FECD6D !important;
+    }
+    #main-nav .logo-dot::after {
+      background: #FECD6D !important;
+    }
+    #main-nav .nav-links a {
+      color: rgba(254,205,109,0.75) !important;
+    }
+    #main-nav .nav-links a:hover {
+      color: #FECD6D !important;
+    }
+    #main-nav .nav-links a::after {
+      background: #FECD6D !important;
+    }
+    #main-nav .btn-ghost {
+      color: #FECD6D !important;
+      border-color: rgba(254,205,109,0.4) !important;
+      background: transparent !important;
+    }
+    #main-nav .btn-ghost:hover {
+      background: rgba(254,205,109,0.12) !important;
+    }
+    #main-nav .btn-primary {
+      background: #D1601F !important;
+      color: #fff !important;
+    }
+    #main-nav .btn-primary:hover {
+      background: #b85218 !important;
+    }
+  </style>
 </head>
 <body>
 
-  
   <nav id="main-nav">
     <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="#" onclick="openModal();return false;">Post a need</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="auth.html">Sign In</a>
     </div>
     <div class="nav-btns">
       <button class="btn-ghost" onclick="openModal()">Post now</button>
@@ -23,7 +65,6 @@
     </div>
   </nav>
 
-  
   <section class="hero">
     <div class="hero-orb o1"></div>
     <div class="hero-orb o2"></div>
@@ -44,14 +85,12 @@
     </div>
   </section>
 
-  
   <div class="stats-row">
     <div class="stat-cell" data-delay="0">  <span class="stat-num">0</span><div class="stat-label">Freelancers registered</div></div>
     <div class="stat-cell" data-delay="150"><span class="stat-num">0</span><div class="stat-label">Jobs posted this week</div></div>
     <div class="stat-cell" data-delay="300"><span class="stat-num">0</span><div class="stat-label">Successful matches</div></div>
   </div>
 
-  
   <section class="results-section" id="results-section">
     <div class="results-bar">
       <div class="results-label" id="results-label">Results</div>
@@ -67,7 +106,6 @@
     </div>
   </section>
 
-  
   <section class="cta-section">
     <div class="cta-orb o1"></div>
     <div class="cta-orb o2"></div>
@@ -79,50 +117,38 @@
     </div>
   </section>
 
-  
-  <footer>
-    <div class="parent">
-      <div class="logo">Kroww</div>
-      <div class="hook">Where ambitious meets opportunity</div>
-      <div class="brief">
-        We connect ambition with direction, bridging people to meaningful work and companies to the right talent.
-        We don't just list jobs — we match skills with purpose, opening doors for candidates.
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">kroww</div>
+        <p class="footer-desc">Connecting skilled freelancers with people who need work done — safely and simply.</p>
       </div>
-      <div class="hr"><hr></div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Freelancer Profiles</a>
+      </div>
+      <div class="footer-col">
+        <h4>Account</h4>
+        <a href="auth.html">Sign In / Sign Up</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="chat.html">Messages</a>
+        <a href="payment.html">Payments</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">How It Works</a>
+        <a href="#">Trust &amp; Safety</a>
+        <a href="#">Help Centre</a>
+      </div>
     </div>
-
-    <div class="search"><input type="search" placeholder=" job Search"></div>
-    <div class="search_button"><input type="button" value="Search"></div>
-
-    <div class="list1">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-
-    <div class="list2">
-      <ul>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
-        <li><a href="#">Support</a></li>
-      </ul>
-    </div>
-
-    <div class="list3">
-      <ul>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Twitter</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Instagram</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <span>© 2026 Kroww. All rights reserved.</span>
+      <span>Terms · Privacy · Cookies</span>
     </div>
   </footer>
 
-  
   <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
     <div class="modal">
       <div class="modal-title">Create a post</div>
@@ -148,7 +174,6 @@
     </div>
   </div>
 
-  
   <div class="toast" id="toast"></div>
 
   <script src="index.js"></script>
