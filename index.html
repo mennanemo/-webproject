@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kroww — Find Short-Term Freelance Work</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  
+  <nav id="main-nav">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#" onclick="openModal();return false;">Post a need</a>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ghost" onclick="openModal()">Post now</button>
+      <button class="btn-primary" onclick="document.getElementById('search-input').focus()">Find people</button>
+    </div>
+  </nav>
+
+  
+  <section class="hero">
+    <div class="hero-orb o1"></div>
+    <div class="hero-orb o2"></div>
+    <div class="hero-orb o3"></div>
+    <div class="hero-badge"><span class="badge-dot"></span> Short-term freelance, done right</div>
+    <h1>Find work or hire someone <span class="accent">fast</span></h1>
+    <p>Search by skill or job title — see matching profiles with their name and skills instantly.</p>
+    <div class="search-wrap">
+      <input id="search-input" type="text" placeholder='Try "Artist", "C++", "Python"...'>
+      <button class="btn-search" onclick="doSearch()">Search</button>
+    </div>
+    <div class="hero-tags">
+      <span class="hero-tag">Artist</span>
+      <span class="hero-tag">C++</span>
+      <span class="hero-tag">Python</span>
+      <span class="hero-tag">Ethical Hacker</span>
+      <span class="hero-tag">Game Developer</span>
+    </div>
+  </section>
+
+  
+  <div class="stats-row">
+    <div class="stat-cell" data-delay="0">  <span class="stat-num">0</span><div class="stat-label">Freelancers registered</div></div>
+    <div class="stat-cell" data-delay="150"><span class="stat-num">0</span><div class="stat-label">Jobs posted this week</div></div>
+    <div class="stat-cell" data-delay="300"><span class="stat-num">0</span><div class="stat-label">Successful matches</div></div>
+  </div>
+
+  
+  <section class="results-section" id="results-section">
+    <div class="results-bar">
+      <div class="results-label" id="results-label">Results</div>
+      <div class="results-meta">
+        <span class="results-count" id="results-count"></span>
+        <button class="clear-btn" onclick="clearSearch()">✕ Clear</button>
+      </div>
+    </div>
+    <div class="result-list" id="result-list"></div>
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <p>No profiles match that search.<br>Try a different skill or name.</p>
+    </div>
+  </section>
+
+  
+  <section class="cta-section">
+    <div class="cta-orb o1"></div>
+    <div class="cta-orb o2"></div>
+    <h2>Ready to get started?</h2>
+    <p>Post what you need or find your next short-term gig in minutes.</p>
+    <div class="cta-btns">
+      <button class="btn-yellow" onclick="openModal()">Post a need</button>
+      <button class="btn-outline-yellow" onclick="document.getElementById('search-input').focus()">Search profiles</button>
+    </div>
+  </section>
+
+  
+  <footer>
+    <div class="parent">
+      <div class="logo">Kroww</div>
+      <div class="hook">Where ambitious meets opportunity</div>
+      <div class="brief">
+        We connect ambition with direction, bridging people to meaningful work and companies to the right talent.
+        We don't just list jobs — we match skills with purpose, opening doors for candidates.
+      </div>
+      <div class="hr"><hr></div>
+    </div>
+
+    <div class="search"><input type="search" placeholder=" job Search"></div>
+    <div class="search_button"><input type="button" value="Search"></div>
+
+    <div class="list1">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="list2">
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+
+    <div class="list3">
+      <ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  
+  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">Create a post</div>
+      <label>I want to...</label>
+      <div class="type-toggle">
+        <button class="type-btn active-hire" id="btn-hire" onclick="setType('hire')">Hire someone</button>
+        <button class="type-btn"             id="btn-work" onclick="setType('work')">Find work</button>
+      </div>
+      <label>Your name</label>
+      <input type="text" id="p-name" placeholder="e.g. Ahmed Hassan">
+      <label>Job title / what you need</label>
+      <input type="text" id="p-title" placeholder="e.g. Need a video editor for 2 days">
+      <label>Description</label>
+      <textarea id="p-desc" rows="3" placeholder="Describe what you need or offer..."></textarea>
+      <label>Skills (comma separated)</label>
+      <input type="text" id="p-skills" placeholder="e.g. Premiere Pro, After Effects">
+      <label>Location</label>
+      <input type="text" id="p-location" placeholder="e.g. Cairo · Remote">
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-post"   onclick="submitPost()">Publish post</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="toast" id="toast"></div>
+
+  <script src="index.js"></script>
+</body>
+</html>
