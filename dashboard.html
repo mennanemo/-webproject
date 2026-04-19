@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Kroww</title>
+  <link rel="stylesheet" href="global.css"/>
+  <style>
+    .layout { display:grid; grid-template-columns:220px 1fr; gap:0; min-height:calc(100vh - 64px); }
+    @media(max-width:700px){ .layout { grid-template-columns:1fr; } .sidebar { display:none; } }
+
+    .sidebar { background:var(--surface); border-right:1.5px solid var(--border); padding:1.5rem 0; }
+    .user-card { display:flex; align-items:center; gap:0.7rem; padding:0 1rem 1.2rem; border-bottom:1px solid var(--border); margin-bottom:0.5rem; }
+    .user-av { width:40px; height:40px; border-radius:50%; background:var(--red); color:var(--yellow); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:0.9rem; flex-shrink:0; }
+    .user-name { font-weight:700; font-size:0.88rem; }
+    .user-role { font-size:0.73rem; color:var(--muted); }
+
+    .nav-item { display:flex; align-items:center; gap:0.7rem; padding:0.65rem 1rem; font-size:0.85rem; font-weight:500; color:var(--muted); cursor:pointer; border-left:3px solid transparent; transition:all 0.15s; }
+    .nav-item:hover { background:var(--bg); color:var(--text); }
+    .nav-item.on { background:#fff5ee; color:var(--orange); border-left-color:var(--orange); font-weight:600; }
+    .nav-item .ic { width:18px; text-align:center; }
+    .nav-badge { margin-left:auto; background:var(--orange); color:white; font-size:0.65rem; font-weight:700; padding:0.1rem 0.4rem; border-radius:999px; }
+
+    .main { background:var(--bg); padding:2rem; overflow-y:auto; }
+    .panel { display:none; }
+    .panel.on { display:block; }
+
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem; }
+    @media(max-width:900px){ .stats { grid-template-columns:repeat(2,1fr); } }
+    .stat-card { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.1rem; text-align:center; }
+    .stat-card .n { font-family:'Playfair Display',serif; font-size:1.7rem; color:var(--orange); }
+    .stat-card .l { font-size:0.75rem; color:var(--muted); }
+
+    .order-row { display:flex; align-items:center; gap:0.9rem; padding:0.9rem; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.15s; }
+    .order-row:hover { background:var(--bg); border-radius:var(--radius); }
+    .order-ic { width:42px; height:42px; border-radius:var(--radius); background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+    .order-info { flex:1; }
+    .order-info .t { font-size:0.88rem; font-weight:600; }
+    .order-info .m { font-size:0.75rem; color:var(--muted); }
+
+    .section-label { font-size:0.72rem; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); padding:0.8rem 1rem 0.2rem; font-weight:600; }
+  </style>
+</head>
+<body data-page="dashboard">
+  <script src="shared.js"></script>
+
+  <div class="layout">
+    <div class="sidebar">
+      <div class="user-card">
+        <div class="user-av">JD</div>
+        <div><div class="user-name">James D.</div><div class="user-role">Client · Pro Plan</div></div>
+      </div>
+      <div class="section-label">Overview</div>
+      <div class="nav-item on" onclick="show('overview',this)"><span class="ic">🏠</span>Dashboard</div>
+      <div class="nav-item" onclick="show('orders',this)"><span class="ic">📦</span>My Orders<span class="nav-badge">3</span></div>
+      <div class="nav-item" onclick="show('requests',this)"><span class="ic">📋</span>My Requests</div>
+      <div class="section-label">Communication</div>
+      <div class="nav-item" onclick="location.href='chat.html'"><span class="ic">💬</span>Messages<span class="nav-badge">2</span></div>
+      <div class="section-label">Account</div>
+      <div class="nav-item" onclick="location.href='payment.html'"><span class="ic">💳</span>Payments</div>
+      <div class="nav-item" onclick="location.href='profile.html'"><span class="ic">👤</span>Profile</div>
+      <div class="nav-item"><span class="ic">⚙️</span>Settings</div>
+    </div>
+
+    <div class="main">
+      <div class="panel on" id="p-overview">
+        <h2 style="margin-bottom:0.3rem;">Good morning, James 👋</h2>
+        <p class="text-muted" style="margin-bottom:1.5rem;">Here's what's happening with your projects.</p>
+        <div class="stats">
+          <div class="stat-card"><div class="n">3</div><div class="l">Active Orders</div></div>
+          <div class="stat-card"><div class="n">2</div><div class="l">Open Requests</div></div>
+          <div class="stat-card"><div class="n">$640</div><div class="l">In Escrow</div></div>
+          <div class="stat-card"><div class="n">12</div><div class="l">Total Projects</div></div>
+        </div>
+        <h3 style="margin-bottom:1rem;">Recent Activity</h3>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎨</div><div class="order-info"><div class="t">Logo Design — Sara M.</div><div class="m">Delivery in 2 days · $45</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">💻</div><div class="order-info"><div class="t">React Web App — Karim B.</div><div class="m">Awaiting your review · $120</div></div><span class="badge badge-blue">Under Review</span></div>
+          <div class="order-row"><div class="order-ic">✍️</div><div class="order-info"><div class="t">SEO Blog Posts — Lena F.</div><div class="m">Completed · $30</div></div><span class="badge badge-green">Done ✓</span></div>
+        </div>
+      </div>
+
+      <div class="panel" id="p-orders">
+        <h2 style="margin-bottom:1.5rem;">My Orders</h2>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎨</div><div class="order-info"><div class="t">Logo Design — Sara M.</div><div class="m">Due in 2 days · $45</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">💻</div><div class="order-info"><div class="t">React Web App — Karim B.</div><div class="m">Delivered · Awaiting approval · $120</div></div><span class="badge badge-blue">Review</span></div>
+          <div class="order-row"><div class="order-ic">📣</div><div class="order-info"><div class="t">Instagram Ads — Omar N.</div><div class="m">In progress · $85</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">✍️</div><div class="order-info"><div class="t">SEO Blog Posts — Lena F.</div><div class="m">Completed 1 week ago · $30</div></div><span class="badge badge-green">Done ✓</span></div>
+        </div>
+      </div>
+
+      <div class="panel" id="p-requests">
+        <div class="flex-between" style="margin-bottom:1.2rem;"><h2>My Requests</h2><a href="post-request.html" class="btn btn-red">+ New Request</a></div>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎬</div><div class="order-info"><div class="t">YouTube video editing</div><div class="m">Posted 1 day ago · Budget: $60–$100</div></div><span class="badge badge-blue">4 Proposals</span></div>
+          <div class="order-row"><div class="order-ic">🌐</div><div class="order-info"><div class="t">Arabic → English translation</div><div class="m">Posted 3 days ago · Budget: $40</div></div><span class="badge badge-blue">7 Proposals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function show(id, el) {
+      document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+      el.classList.add('on');
+      document.getElementById('p-'+id).classList.add('on');
+    }
+  </script>
+</body>
+</html>
