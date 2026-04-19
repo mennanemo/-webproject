@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication System</title>
+    <title>LogIn - Kroww</title>
+    <link rel="stylesheet" href="global.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <h1 class="logo">kroww</h1>
@@ -18,9 +18,7 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
     <div class="container">
-        <!-- Sign Up Page -->
         <div class="auth-page" id="signupPage">
             <div class="auth-card">
                 <h2>Create Account</h2>
@@ -69,7 +67,6 @@
             </div>
         </div>
 
-        <!-- Login Page -->
         <div class="auth-page" id="loginPage" style="display: none;">
             <div class="auth-card">
                 <h2>Login</h2>
@@ -96,7 +93,6 @@
             </div>
         </div>
 
-        <!-- Dashboard Page -->
         <div class="auth-page" id="dashboardPage" style="display: none;">
             <div class="dashboard-card">
                 <h2>Welcome to Dashboard</h2>
@@ -133,7 +129,6 @@
         </div>
     </div>
 
-    <!-- Success Message -->
     <div class="message" id="successMessage">
         <div class="message-content success">
             <span id="messageText"></span>
@@ -141,7 +136,6 @@
         </div>
     </div>
 
-    <!-- Error Message -->
     <div class="message" id="errorMessage">
         <div class="message-content error">
             <span id="errorText"></span>
@@ -150,5 +144,36 @@
     </div>
 
     <script src="auth.js"></script>
+
+    <footer class="footer" style="margin-top:2rem;">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">kroww</div>
+          <p class="footer-desc">Connecting skilled freelancers with people who need work done — safely and simply.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="index.html">Home</a>
+          <a href="profile.html">Freelancer Profiles</a>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="chat.html">Messages</a>
+          <a href="payment.html">Payments</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">How It Works</a>
+          <a href="#">Trust &amp; Safety</a>
+          <a href="#">Help Centre</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Kroww. All rights reserved.</span>
+        <span>Terms · Privacy · Cookies</span>
+      </div>
+    </footer>
 </body>
 </html>
