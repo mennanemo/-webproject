@@ -1,5 +1,3 @@
-// ==================== Authentication System ====================
-
 class AuthSystem {
     static ADMIN_EMAILS = ['admin@gmail.com'];
 
