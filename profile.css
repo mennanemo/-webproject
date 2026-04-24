@@ -1,0 +1,155 @@
+#profileimg
+{
+   border-radius: 50%;
+   width:200px;
+   height:200px;
+   border:10px solid #f6f4ee;
+   margin:10px;
+}
+html,body{
+  overflow:hidden;
+}
+.pfwrapper{
+  display:flex;
+  height: 100vh;
+  align-items: flex-start;
+  width:100%;
+  overflow-y: auto;
+
+}
+.colum
+{
+  display:flex;
+  flex-direction:column;
+  position: sticky;
+  top:0;
+  flex-shrink: 0;
+ height: fit-content; 
+  margin: 0;   
+
+
+}
+.sidebar
+{
+width: 300px;
+padding:10px;
+background-color:#fece6dc4;
+border-radius:5%;
+border:4px solid #f7e2a6 ;
+  padding: 30px;
+
+}
+.imgcard
+
+{
+border-radius: 50%;
+   width:210px;
+   height:210px;
+   background:transparent;
+   backdrop-filter: blur(10px);
+   
+}
+
+.words
+{
+  display:inline-flex;
+  font-size:20px;
+  font-family:'Trebuchet MS';
+  color: #0c2d51;
+  border-radius: 30px;
+ background-color: #6a9ce3a2;
+  border:2px solid #0c2d51 ;
+ padding:7px ;
+ margin:5px;
+}
+
+#workedwith
+{
+
+  display:flex;
+  width:250px;
+  height:auto;
+  margin-left:0;
+  padding: 20px;
+  border-radius:10%;
+  margin-top:20px;
+  padding: 20px;
+  position: sticky;
+  top:0;
+  border:5px solid #135398;
+  background-color: #5687bbd3;
+ 
+}
+
+.tag
+{
+ border-radius: 30px;
+ background-color: #FECD6D;
+ padding:6px ;
+ margin:5px;
+
+}
+
+.skills-css
+{
+  display: inline-flex;
+  background-color: #70191D;
+  color:#FECD6D;
+  padding:6px;
+  padding-left: 9px;
+   padding-right: 9px;
+}
+
+.jobies-css
+{
+  display: inline-flex;
+  background-color: #70191D;
+  color:#FECD6D;
+  padding:6px;
+  padding-left: 9px;
+   padding-right: 9px;
+
+}
+#theabout
+{
+ background-color:#5686BB;
+ border-radius:5%;
+ border: 4px solid #3f6184;
+ padding:20px;
+ color: rgb(10, 34, 65);
+}
+
+#flname
+{
+   display: inline-flex;
+  background-color: #fce2ae;
+  border-radius:40%;
+margin-left:80px;
+  padding:7px;
+  border: 3px solid #4b3e22;
+  margin-bottom: 9px;
+
+}
+
+#posts {
+    display: flex;
+    height:200px;
+    flex-direction:column; 
+    width: auto;
+    padding: 20px;
+    gap: 100px;              
+}
+
+.postcss {
+    display: block;
+    background-color: #5687bb;
+    border: 5px solid #135398;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    padding:100px;
+     font-size:30px;
+  font-family:'Trebuchet MS';
+    font-family: 'Trebuchet MS';
+    color: #0c2d51;
+}

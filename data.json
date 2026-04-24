@@ -1,0 +1,153 @@
+{
+    "users":
+    [
+        
+        {
+           "id":1,
+           "firstname": "Snoopy",
+           "lastname":"The Puppy",
+           "job":["Ethical Hacker"],
+           "ratingp": 4.8 ,
+           "ratingr": 4.0,
+            "dealsnum":85,
+            "about":"I am a cybersecurity graduate with 3 years of experience",
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "skills": ["C++","Networking","linux","Python"],
+            "location":"Alexandria,Egypt",
+            "image": "images/img1.jpg",
+            "bgimage":"bgs/stars.gif",
+            "bgColor": "#e1e1eb",
+            "Providedf":[8,4,6]
+        },
+
+        {
+           "id":2,
+           "firstname": "Pinkie",
+           "lastname":"Plop",
+           "job":["veteranian"],
+           "ratingp": 4.3 ,
+           "ratingr": 3.9,
+            "dealsnum":45,
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "about":"I am a trained veteranian with more than 5 years of experience I am more experienced with stable animals , birds , lizards and home pets",
+            "skills": ["fevers","vaccination","depression","fractures","internal injuries"],
+            "location":"Gaza,Palestine",
+            "image": "images/img2.jpg",
+            "bgimage": "bgs/pink.gif",
+            "bgColor": "#e1e1eb",
+             "Providedf":[3,4,7]
+
+        },
+
+
+        {
+             "id":3,
+           "firstname": "Ice",
+           "lastname":"Bear",
+           "job":["Fisherman","professional bodygaurd"],
+           "ratingp": 4.9 ,
+           "ratingr": 3.7 ,
+            "dealsnum":30,
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "about":"I am an experienced Fisherman with 7 years of experience over different coasts around the world",
+            "about2":"I have blackbelt in karate experience in guarding",
+            "skills": ["fish","jellyfish","small sharks","crabs","judo","karate"],
+            "location":"Borsaed,Egypt",
+            "image": "images/img3.jpg",
+            "bgimage": "bgs/white.gif",
+            "bgColor": "#e1e1eb",
+             "Providedf":[2,5,8,1]
+        },
+         
+        {
+               "id":4,
+           "firstname": "loli",
+           "lastname":"Pop",
+           "job":["Teacher", "chef"],
+           "ratingp": 4.0 ,
+           "ratingr": 4.4 ,
+            "dealsnum":100,
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "about":"I am a school teacher that can teach english and science starting from kindergarten to secondary stage and I am also a professional chef",
+            "about2":"I am also a professional chef that specialises in traditional food",
+            "skills": ["English","Science","cakes","pastiries","traditional food"],
+            "location":"Halab,Syria",
+            "image": "images/img4.jpg",
+            "bgColor": "#ede4f0",
+             "Providedf":[5,6,8]
+        },
+
+        {
+            "id":5,
+           "firstname": "Golden",
+           "lastname":"Fish",
+           "job":["Artist"],
+           "ratingp": 3.4 ,
+           "ratingr": 4.3 ,
+           "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "dealsnum":20,
+            "about":"I am an artist with 5 years of experience and I have made my own comic series",
+            "skills": ["Digital art","Storyboard","animation","Character design"],
+            "location":"Alexandria,Egypt",
+            "image": "images/img5.jpg",
+            "bgColor": "#fffbf5",
+             "Providedf":[7,1,4,2]
+
+        },
+
+          {
+               "id":6,
+           "firstname": "Sun",
+           "lastname":"Flower",
+           "job":["Professor"],
+           "rating": 4.6 ,
+           "ratingr": 3.4 ,
+            "dealsnum":84,
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "about":"I am a college Professor with a PHD in english and human lingustics",
+            "skills": ["English"],
+            "location":"Cairo,Egypt",
+            "image": "images/img6.jpg",
+            "bgColor": "#faf9f5",
+             "Providedf":[4,8]
+   
+        },
+          {
+               "id":7,
+           "firstname": "kay",
+           "lastname":"kite",
+           "job":["Artist"],
+           "ratingp": 2.6 ,
+            "ratingr": 3.1 ,
+            "dealsnum":20,
+            "about":"I am an artist that specialises in oil painting with over 10 years of experience",
+            "skills": ["Oil painting","Character design"],
+            "location":"Aswan,Egypt",
+            "image": "images/img7.jpg",
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "bgimage":"bgs/butter.gif",
+            "bgColor": "#e1e1eb",
+             "Providedf":[5,2]
+        },
+          {
+           "id":8,
+           "firstname": "Sami",
+           "lastname":"Sunday",
+           "job":["Game Developer"],
+           "ratingp": 5 ,
+            "ratingr": 4.9 ,
+            "dealsnum":57,
+            "about":"I am a Game developer with 6 years of experience and i have worked on 10 games",
+            "skills": ["C++","Java","Python"],
+            "location":"Alexandria,Egypt",
+            "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
+            "image": "images/img8.jpg",
+            "bgimage":"bgs/cube.gif",
+            "bgColor": "#e1e1eb",
+             "Providedf":[]
+        }
+
+
+
+    ]
+}
