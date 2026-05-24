@@ -1,0 +1,98 @@
+#profileimg
+{
+   position: absolute;
+   border-radius: 50%;
+   width:170px;
+   height:170px;
+   border:3px solid #232023 ;
+   margin:20px;
+   right:15px;
+   top:60px;
+    cursor: pointer;
+   
+}
+#container
+{
+  position: relative;
+  width:1000px;
+  height:100%;
+   margin:0 auto;
+  background:#fff8f0;
+  border:2px solid #fbf3e9;
+   border-radius: 2%;
+
+}
+
+#imagecard
+{
+  position: relative;
+  width:900px;
+  height:400px;
+  background:#fff8f0;
+  border:2px solid #70191d;
+   border-radius: 2%;
+    margin: 0 auto;
+  
+}
+#bgimage
+{
+  position: relative;
+  width: 900px;
+  height:200px;
+  top:0;
+  background-image: url("/images/bgbg.jpg");
+  border:1px solid #232023 ;
+}
+#theabout
+{
+   position: absolute;
+  width:300px;
+  right:80px;
+  bottom:60px;
+   font-family : sans-serif;
+   font-weight:300;
+  font-size:85%;
+  color:  #44320c ;
+    line-height: 1.4;     
+  letter-spacing: 0.5px;  
+  text-align: left;  
+          
+}
+#flname
+{
+  position:absolute;
+  right:200px;
+  bottom: 140px;
+  font-size:xx-large;
+  font-weight: bold;
+    color:  #44320c ;      
+  text-align: left;  
+   padding: 12px 14px;
+   text-shadow:1px 1 px 2px#232023 ;
+}
+#editpf
+{
+ position: absolute;
+  bottom:30px;
+  left: 90px;
+  display: inline-block;
+  padding: 10px 20px; 
+  border-radius: 5px;
+  background-color:#e5bc68;
+  color: white;        
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+html,body{
+  
+  background-image: url(../images/artbg.png) ;
+ animation: slide 40s linear infinite;
+}
+@keyframes slide 
+{
+  from {background-position: 0 0;}
+  to {background-position:  0 673px ;}
+}
+           

@@ -14,8 +14,8 @@
             "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
             "skills": ["C++","Networking","linux","Python"],
             "location":"Alexandria,Egypt",
-            "image": "images/img1.jpg",
-            "bgimage":"bgs/stars.gif",
+            "image": "/images/img1.jpg",
+            "bgimage":"../bgs/stars.gif",
             "bgColor": "#e1e1eb",
             "Providedf":[8,4,6]
         },
@@ -32,8 +32,8 @@
             "about":"I am a trained veteranian with more than 5 years of experience I am more experienced with stable animals , birds , lizards and home pets",
             "skills": ["fevers","vaccination","depression","fractures","internal injuries"],
             "location":"Gaza,Palestine",
-            "image": "images/img2.jpg",
-            "bgimage": "bgs/pink.gif",
+            "image": "/images/img2.jpg",
+            "bgimage": "/bgs/pink.gif",
             "bgColor": "#e1e1eb",
              "Providedf":[3,4,7]
 
@@ -53,8 +53,8 @@
             "about2":"I have blackbelt in karate experience in guarding",
             "skills": ["fish","jellyfish","small sharks","crabs","judo","karate"],
             "location":"Borsaed,Egypt",
-            "image": "images/img3.jpg",
-            "bgimage": "bgs/white.gif",
+            "image": "/images/img3.jpg",
+            "bgimage": "/bgs/white.gif",
             "bgColor": "#e1e1eb",
              "Providedf":[2,5,8,1]
         },
@@ -72,7 +72,7 @@
             "about2":"I am also a professional chef that specialises in traditional food",
             "skills": ["English","Science","cakes","pastiries","traditional food"],
             "location":"Halab,Syria",
-            "image": "images/img4.jpg",
+            "image": "/images/img4.jpg",
             "bgColor": "#ede4f0",
              "Providedf":[5,6,8]
         },
@@ -89,7 +89,7 @@
             "about":"I am an artist with 5 years of experience and I have made my own comic series",
             "skills": ["Digital art","Storyboard","animation","Character design"],
             "location":"Alexandria,Egypt",
-            "image": "images/img5.jpg",
+            "image": "/images/img5.jpg",
             "bgColor": "#fffbf5",
              "Providedf":[7,1,4,2]
 
@@ -107,7 +107,7 @@
             "about":"I am a college Professor with a PHD in english and human lingustics",
             "skills": ["English"],
             "location":"Cairo,Egypt",
-            "image": "images/img6.jpg",
+            "image": "/images/img6.jpg",
             "bgColor": "#faf9f5",
              "Providedf":[4,8]
    
@@ -123,9 +123,9 @@
             "about":"I am an artist that specialises in oil painting with over 10 years of experience",
             "skills": ["Oil painting","Character design"],
             "location":"Aswan,Egypt",
-            "image": "images/img7.jpg",
+            "image": "/images/img7.jpg",
             "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
-            "bgimage":"bgs/butter.gif",
+            "bgimage":"/bgs/butter.gif",
             "bgColor": "#e1e1eb",
              "Providedf":[5,2]
         },
@@ -141,8 +141,8 @@
             "skills": ["C++","Java","Python"],
             "location":"Alexandria,Egypt",
             "post":["I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting","I am open to work yall","i want someone to develop a game","i want someone to paint me a painting"],
-            "image": "images/img8.jpg",
-            "bgimage":"bgs/cube.gif",
+            "image": "/images/img8.jpg",
+            "bgimage":"/bgs/cube.gif",
             "bgColor": "#e1e1eb",
              "Providedf":[]
         }

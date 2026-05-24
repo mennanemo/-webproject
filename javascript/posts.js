@@ -1,4 +1,4 @@
-fetch("data.json")//read json
+fetch("../data.json")//read json
 .then(hold=> hold.json()) //unlock w 22raha
 .then(data =>
 {

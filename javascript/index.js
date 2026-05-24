@@ -7,8 +7,8 @@ let currentType = 'hire';
 async function init() {
   try {
     const [fileRes, dataRes] = await Promise.all([
-      fetch('file.json'),
-      fetch('data.json')
+      fetch('/file.json'),
+      fetch('/data.json')
     ]);
     const fileJson = await fileRes.json();
     const dataJson = await dataRes.json();

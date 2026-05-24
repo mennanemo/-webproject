@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Messages — Kroww</title>
+  <link rel="stylesheet" href="global.css"/>
+  <style>
+    body { display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+    .chat-app { display:grid; grid-template-columns:270px 1fr 270px; flex:1; overflow:hidden; }
+    @media(max-width:1000px){ .chat-app { grid-template-columns:240px 1fr; } .right-panel { display:none; } }
+    @media(max-width:650px){ .chat-app { grid-template-columns:1fr; } .left-panel { display:none; } }
+
+    .left-panel { border-right:1.5px solid var(--border); background:var(--surface); display:flex; flex-direction:column; overflow:hidden; }
+    .lp-head { padding:1rem; border-bottom:1px solid var(--border); }
+    .lp-head h3 { font-size:0.95rem; margin-bottom:0.6rem; }
+    .lp-search { display:flex; align-items:center; gap:0.4rem; background:var(--bg); border:1.5px solid var(--border); border-radius:8px; padding:0.35rem 0.7rem; }
+    .lp-search input { border:none; background:transparent; font-size:0.82rem; width:100%; }
+    .lp-search input:focus { outline:none; }
+    .contacts { overflow-y:auto; flex:1; }
+    .contact { display:flex; align-items:center; gap:0.7rem; padding:0.8rem 1rem; cursor:pointer; border-left:3px solid transparent; transition:all 0.15s; }
+    .contact:hover { background:var(--bg); }
+    .contact.on { background:#fff5ee; border-left-color:var(--orange); }
+    .c-av { width:40px; height:40px; border-radius:50%; color:white; font-size:0.82rem; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; flex-shrink:0; }
+    .c-body { flex:1; min-width:0; }
+    .c-name { font-size:0.85rem; font-weight:700; }
+    .c-prev { font-size:0.74rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .c-meta { display:flex; flex-direction:column; align-items:flex-end; gap:0.25rem; flex-shrink:0; }
+    .c-time { font-size:0.65rem; color:var(--muted); }
+    .unread { background:var(--orange); color:white; font-size:0.65rem; font-weight:700; padding:0.1rem 0.4rem; border-radius:999px; }
+
+    .chat-main { display:flex; flex-direction:column; overflow:hidden; background:var(--bg); }
+    .chat-head { background:var(--surface); border-bottom:1.5px solid var(--border); padding:0.8rem 1.2rem; display:flex; align-items:center; gap:0.8rem; flex-shrink:0; }
+    .chat-head .c-av { width:38px; height:38px; font-size:0.78rem; }
+    .ch-info { flex:1; }
+    .ch-name { font-weight:700; font-size:0.92rem; }
+    .ch-status { font-size:0.73rem; color:#4caf50; }
+    .ctx-bar { background:#fff5ee; border-bottom:1px solid #ffddc8; padding:0.55rem 1.2rem; display:flex; align-items:center; gap:0.7rem; flex-shrink:0; }
+    .ctx-bar .ci { font-size:1.2rem; }
+    .ctx-info { flex:1; font-size:0.8rem; }
+    .ctx-info strong { color:var(--red); font-size:0.82rem; }
+
+    .messages { flex:1; overflow-y:auto; padding:1.2rem; display:flex; flex-direction:column; gap:0.8rem; }
+    .date-sep { display:flex; align-items:center; gap:0.7rem; font-size:0.7rem; color:var(--muted); font-weight:600; }
+    .date-sep::before,.date-sep::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    .msg-wrap { display:flex; flex-direction:column; max-width:70%; }
+    .msg-wrap.me { align-self:flex-end; align-items:flex-end; }
+    .msg-wrap.them { align-self:flex-start; }
+    .bubble { padding:0.65rem 0.95rem; font-size:0.87rem; line-height:1.55; border-radius:4px 12px 12px 12px; }
+    .them .bubble { background:var(--surface); box-shadow:var(--shadow); }
+    .me .bubble { background:var(--orange); color:white; border-radius:12px 4px 12px 12px; }
+    .msg-time { font-size:0.65rem; color:var(--muted); margin-top:0.2rem; }
+
+    .file-msg { display:flex; align-items:center; gap:0.6rem; padding:0.65rem 0.9rem; border-radius:var(--radius); background:var(--surface); border:1.5px solid var(--border); cursor:pointer; max-width:220px; }
+    .file-msg:hover { background:var(--bg); }
+    .offer-msg { background:var(--surface); border:2px solid var(--border); border-radius:var(--radius); padding:1rem; max-width:240px; }
+    .offer-msg .op { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--orange); }
+
+    .typing { display:flex; align-items:center; gap:0.35rem; padding:0.3rem 0; }
+    .dot { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:bounce 1.2s infinite; }
+    .dot:nth-child(2){animation-delay:.2s;} .dot:nth-child(3){animation-delay:.4s;}
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+    .input-area { background:var(--surface); border-top:1.5px solid var(--border); padding:0.8rem 1rem; flex-shrink:0; }
+    .tools { display:flex; gap:0.4rem; margin-bottom:0.5rem; }
+    .tbtn { background:none; border:none; font-size:1rem; color:var(--muted); padding:0.2rem 0.4rem; border-radius:6px; cursor:pointer; }
+    .tbtn:hover { background:var(--bg); color:var(--orange); }
+    .input-row { display:flex; align-items:flex-end; gap:0.6rem; }
+    .input-row textarea { flex:1; border:1.5px solid var(--border); border-radius:var(--radius); padding:0.6rem 0.9rem; font-size:0.88rem; resize:none; max-height:100px; min-height:40px; background:var(--bg); }
+    .input-row textarea:focus { outline:none; border-color:var(--orange); }
+    .send { width:40px; height:40px; border-radius:50%; background:var(--orange); border:none; color:white; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.18s; }
+    .send:hover { background:#b85218; }
+
+    .right-panel { border-left:1.5px solid var(--border); background:var(--surface); overflow-y:auto; }
+    .rp-head { padding:1rem; border-bottom:1px solid var(--border); font-weight:700; font-size:0.88rem; }
+    .rp-sec { padding:1rem; border-bottom:1px solid var(--border); font-size:0.83rem; line-height:1.7; }
+    .rp-sec h4 { font-size:0.72rem; letter-spacing:0.8px; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; font-weight:600; font-family:'Inter',sans-serif; }
+    .milestone { display:flex; align-items:center; gap:0.6rem; padding:0.4rem 0; border-bottom:1px dashed var(--border); font-size:0.82rem; }
+    .milestone:last-child { border:none; }
+    .md { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+
+    .modal-bg { display:none; position:fixed; inset:0; background:rgba(26,16,8,0.5); z-index:200; align-items:center; justify-content:center; }
+    .modal-bg.show { display:flex; }
+    .modal { background:var(--surface); border-radius:14px; padding:1.8rem; width:90%; max-width:360px; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+    .modal h3 { margin-bottom:0.3rem; }
+    .modal-col { display:flex; flex-direction:column; gap:0.85rem; margin:1rem 0; }
+    .modal-row { display:flex; gap:0.7rem; }
+  </style>
+</head>
+<body data-page="chat">
+  <script src="shared.js"></script>
+
+  <div class="chat-app">
+    <!-- LEFT: contacts -->
+    <div class="left-panel">
+      <div class="lp-head">
+        <h3>Messages</h3>
+        <div class="lp-search"><span>🔍</span><input type="text" placeholder="Search…" oninput="filterC(this.value)"/></div>
+      </div>
+      <div class="contacts" id="contacts"></div>
+    </div>
+
+    <div class="chat-main">
+      <div class="chat-head">
+        <div class="c-av" id="h-av" style="background:var(--red)">SM</div>
+        <div class="ch-info"><div class="ch-name" id="h-name">Sara M.</div><div class="ch-status" id="h-status">● Online · Designer</div></div>
+        <button class="btn btn-outline btn-sm" onclick="location.href='profile.html'">Profile</button>
+        <button class="btn btn-yellow btn-sm" onclick="showModal()">+ Offer</button>
+      </div>
+      <div class="ctx-bar">
+        <span class="ci">📋</span>
+        <div class="ctx-info"><strong id="ctx-title">Request: Logo for The Roasted Bean</strong> · $50–$150 · <span style="color:var(--orange);font-weight:600;">In Progress</span></div>
+        <button class="btn btn-blue btn-sm" onclick="location.href='payment.html'">Release Payment</button>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div id="typing" style="padding:0 1.2rem 0.3rem;display:none;"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="font-size:0.73rem;color:var(--muted);margin-left:0.3rem;" id="typing-lbl">Sara is typing…</span></div></div>
+      <div class="input-area">
+        <div class="tools">
+          <button class="tbtn" onclick="attachFile()" title="Attach">📎</button>
+          <button class="tbtn" onclick="showModal()" title="Send offer">💰</button>
+          <button class="tbtn" title="Emoji">😊</button>
+        </div>
+        <div class="input-row">
+          <textarea id="msg-in" placeholder="Type a message… (Enter = send)" rows="1" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
+          <button class="send" onclick="send()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="rp-head">📋 Request Details</div>
+      <div class="rp-sec"><h4>Description</h4>Logo for <strong>"The Roasted Bean"</strong>. Warm earthy tones, hand-crafted feel. Need AI + PNG + SVG.</div>
+      <div class="rp-sec"><h4>Details</h4>💰 Budget: $50–$150<br/>⏱ Deadline: March 22<br/>🔒 Escrow: $49.50 held</div>
+      <div class="rp-sec">
+        <h4>Milestones</h4>
+        <div class="milestone"><div class="md" style="background:var(--blue)"></div>Request posted</div>
+        <div class="milestone"><div class="md" style="background:var(--blue)"></div>Freelancer hired</div>
+        <div class="milestone"><div class="md" style="background:var(--orange)"></div><strong>Work in progress</strong></div>
+        <div class="milestone"><div class="md" style="background:var(--border)"></div>Delivery & review</div>
+        <div class="milestone"><div class="md" style="background:var(--border)"></div>Payment released</div>
+      </div>
+      <div class="rp-sec" style="display:flex;flex-direction:column;gap:0.5rem;">
+        <button class="btn btn-blue btn-sm w-full" onclick="location.href='payment.html'">✅ Approve & Pay</button>
+        <button class="btn btn-outline btn-sm w-full">↩ Request Revision</button>
+        <button class="btn btn-ghost btn-sm w-full" style="color:var(--red);">⚠️ Open Dispute</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <h3>Send an Offer 💰</h3>
+      <div class="modal-col">
+        <div class="modal-row">
+          <div class="input-group" style="flex:1;"><label>Price ($)</label><input type="number" placeholder="75"/></div>
+          <div class="input-group" style="flex:1;"><label>Delivery</label><select><option>1 day</option><option>3 days</option><option selected>5 days</option><option>7 days</option></select></div>
+        </div>
+        <div class="input-group"><label>Note</label><textarea placeholder="What's included…" style="min-height:70px;"></textarea></div>
+      </div>
+      <div style="display:flex;gap:0.6rem;">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-red" style="flex:1;justify-content:center;" onclick="sendOffer()">Send Offer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="chat.js"></script>
+</body>
+</html>
