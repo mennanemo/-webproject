@@ -270,10 +270,39 @@
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
+
+
 #editpf:hover {
   background-color: #8f2226;
   transform: translateY(-1px);
 }
+
+#connectbut
+{
+  
+  position: absolute;
+  bottom: 30px;
+  margin-left:500px;
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 50px;
+  background-color: #e3b75f;
+  color: #fff8f0;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#connectbut:hover {
+  background-color: #ca962f;
+  transform: translateY(-1px);
+}
+
+
+
 
 .cert-overlay  {
   display: none;
@@ -310,6 +339,8 @@
   from { transform: scale(0.3); opacity: 0; }
   to   { transform: scale(1);   opacity: 1; }
 }
+
+
 
 
 html, body {
