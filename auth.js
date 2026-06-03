@@ -1,9 +1,12 @@
+// ==================== Authentication System ====================
+
 class AuthSystem {
-    static ADMIN_EMAILS = ['admin@gmail.com'];
+    static ADMIN_EMAILS = ['admin@mail.com'];
 
     constructor() {
         this.currentUser = null;
         this.users = this.loadUsers();
+        this.pendingUser = null; // Store user data during role selection
         this.init();
     }
 
@@ -51,7 +54,7 @@ class AuthSystem {
     }
 
     validateName(name) {
-        return name && name.trim().length >= 5;
+        return name && name.trim().length >= 2;
     }
 
     validatePhone(phone) {
@@ -79,15 +82,21 @@ class AuthSystem {
 
     // ==================== Auth Operations ====================
 
-    signup(name, email, phone, password, confirmPassword) {
+    signup(firstName, lastName, email, phone, password, confirmPassword) {
         // Clear previous errors
-        this.clearErrors(['nameError', 'emailError', 'phoneError', 'passwordError', 'confirmError']);
+        this.clearErrors(['firstNameError', 'lastNameError', 'emailError', 'phoneError', 'passwordError', 'confirmError']);
 
         let hasError = false;
 
-        // Validate name
-        if (!this.validateName(name)) {
-            this.showError('nameError', 'Name must be at least 5 characters');
+        // Validate first name
+        if (!this.validateName(firstName)) {
+            this.showError('firstNameError', 'First name must be at least 2 characters');
+            hasError = true;
+        }
+
+        // Validate last name
+        if (!this.validateName(lastName)) {
+            this.showError('lastNameError', 'Last name must be at least 2 characters');
             hasError = true;
         }
 
@@ -125,30 +134,61 @@ class AuthSystem {
         if (hasError) return false;
 
         try {
-            // Create new user
+            // Create new user object (without saving yet)
             const newUser = {
                 id: Date.now(),
-                name: name.trim(),
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
                 email: email.toLowerCase(),
                 phone: phone.trim(),
                 password: password,
-                role: AuthSystem.ADMIN_EMAILS.includes(email.toLowerCase()) ? 'admin' : 'user',
+                role: '', // Will be set after role selection
                 createdAt: new Date().toISOString()
             };
 
-            this.users.push(newUser);
-            this.saveUsers();
-
-            // Set as current user and go to dashboard
-            this.currentUser = { ...newUser, password: undefined };
-            this.saveSession(this.currentUser);
-
-            this.showMessage('Account created! Welcome to dashboard.', 'success');
-            this.navigateToDashboard();
+            // Store pending user and navigate to role selection
+            this.pendingUser = newUser;
+            this.showMessage('Account created! Please select your role.', 'success');
+            this.navigateToRoleSelection();
             return true;
         } catch (error) {
             this.showMessage('Signup failed: ' + error.message, 'error');
             return false;
+        }
+    }
+
+    selectRole(role) {
+        if (!this.pendingUser) {
+            this.showMessage('Error: No pending user found', 'error');
+            return;
+        }
+
+        try {
+            // Security check: Only whitelisted emails can be admin
+            if (role === 'admin') {
+                if (!AuthSystem.ADMIN_EMAILS.includes(this.pendingUser.email)) {
+                    this.showMessage('Error: Your email is not authorized for admin role!', 'error');
+                    return;
+                }
+            }
+
+            // Set the role
+            this.pendingUser.role = role;
+
+            // Save user to storage
+            this.users.push(this.pendingUser);
+            this.saveUsers();
+
+            // Set as current user and go to dashboard
+            this.currentUser = { ...this.pendingUser, password: undefined };
+            this.saveSession(this.currentUser);
+            this.pendingUser = null;
+
+            const fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+            this.showMessage(`Welcome, ${fullName}!`, 'success');
+            this.navigateToDashboard();
+        } catch (error) {
+            this.showMessage('Error selecting role: ' + error.message, 'error');
         }
     }
 
@@ -210,20 +250,33 @@ class AuthSystem {
     navigateToSignup() {
         this.hidePage('loginPage');
         this.hidePage('dashboardPage');
+        this.hidePage('roleSelectionPage');
         this.showPage('signupPage');
         this.resetForm('signupForm');
+        this.updateNavBar();
     }
 
     navigateToLogin() {
         this.hidePage('signupPage');
         this.hidePage('dashboardPage');
+        this.hidePage('roleSelectionPage');
         this.showPage('loginPage');
         this.resetForm('loginForm');
+        this.updateNavBar();
+    }
+
+    navigateToRoleSelection() {
+        this.hidePage('signupPage');
+        this.hidePage('loginPage');
+        this.hidePage('dashboardPage');
+        this.showPage('roleSelectionPage');
+        this.updateNavBar();
     }
 
     navigateToDashboard() {
         this.hidePage('signupPage');
         this.hidePage('loginPage');
+        this.hidePage('roleSelectionPage');
         this.showPage('dashboardPage');
         this.updateDashboard();
         this.updateNavBar();
@@ -245,13 +298,18 @@ class AuthSystem {
         if (!this.currentUser) return;
 
         // Show user details
-        document.getElementById('dashboardName').textContent = this.currentUser.name;
+        const fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+        document.getElementById('dashboardName').textContent = fullName;
         document.getElementById('dashboardEmail').textContent = this.currentUser.email;
         document.getElementById('dashboardPhone').textContent = this.currentUser.phone;
-        document.getElementById('dashboardRole').textContent = 
-            this.currentUser.role.charAt(0).toUpperCase() + this.currentUser.role.slice(1);
+        
+        // Format role display
+        const roleDisplay = this.currentUser.role 
+            ? this.currentUser.role.charAt(0).toUpperCase() + this.currentUser.role.slice(1)
+            : 'N/A';
+        document.getElementById('dashboardRole').textContent = roleDisplay;
 
-        // Show admin panel only for admins
+        // Show admin panel only for admins (if admin role exists)
         const adminPanel = document.getElementById('adminPanel');
         if (this.currentUser.role === 'admin') {
             adminPanel.style.display = 'block';
@@ -302,14 +360,31 @@ class AuthSystem {
         const navRight = document.getElementById('navRight');
         const logoutBtn = document.getElementById('logoutBtn');
         const userInfo = document.getElementById('userInfo');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+
+        // Check which auth page is currently visible
+        const signupPageVisible = document.getElementById('signupPage')?.style.display !== 'none';
+        const loginPageVisible = document.getElementById('loginPage')?.style.display !== 'none';
 
         if (this.currentUser) {
-            logoutBtn.style.display = 'block';
-            userInfo.style.display = 'block';
-            userInfo.textContent = `${this.currentUser.name} (${this.currentUser.role})`;
+            if (logoutBtn) logoutBtn.style.display = 'block';
+            if (userInfo) userInfo.style.display = 'block';
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (signupBtn) signupBtn.style.display = 'none';
+            const fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+            if (userInfo) userInfo.textContent = `${fullName} (${this.currentUser.role})`;
         } else {
-            logoutBtn.style.display = 'none';
-            userInfo.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+            if (userInfo) userInfo.style.display = 'none';
+            // Hide login/signup buttons when on those pages, show them otherwise
+            if (signupPageVisible || loginPageVisible) {
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (signupBtn) signupBtn.style.display = 'none';
+            } else {
+                if (loginBtn) loginBtn.style.display = 'block';
+                if (signupBtn) signupBtn.style.display = 'block';
+            }
         }
     }
 
@@ -370,16 +445,35 @@ class AuthSystem {
             this.navigateToSignup();
         });
 
+        const loginBtn = document.getElementById('loginBtn');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = 'login';
+                this.navigateToLogin();
+            });
+        }
+
+        const signupBtn = document.getElementById('signupBtn');
+        if (signupBtn) {
+            signupBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = 'signup';
+                this.navigateToSignup();
+            });
+        }
+
         // Forms
         document.getElementById('signupForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('signupName').value;
+            const firstName = document.getElementById('signupFirstName').value;
+            const lastName = document.getElementById('signupLastName').value;
             const email = document.getElementById('signupEmail').value;
             const phone = document.getElementById('signupPhone').value;
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            this.signup(name, email, phone, password, confirmPassword);
+            this.signup(firstName, lastName, email, phone, password, confirmPassword);
         });
 
         document.getElementById('loginForm').addEventListener('submit', (e) => {
@@ -445,9 +539,26 @@ class AuthSystem {
             this.navigateToDashboard();
             this.updateNavBar();
         } else {
-            this.navigateToSignup();
+            const hash = window.location.hash;
+            if (hash === '#login') {
+                this.navigateToLogin();
+            } else {
+                this.navigateToSignup();
+            }
             this.updateNavBar();
         }
+
+        // Handle browser hash changes dynamically
+        window.addEventListener('hashchange', () => {
+            if (!this.currentUser) {
+                const newHash = window.location.hash;
+                if (newHash === '#login') {
+                    this.navigateToLogin();
+                } else if (newHash === '#signup') {
+                    this.navigateToSignup();
+                }
+            }
+        });
     }
 }
 
