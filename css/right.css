@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;600;700&display=swap');
+
+
+#eduj
+{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+   width: 350px;
+  flex-shrink:0;
+  
+}
+.tag-pair {
+   display: flex;
+  align-items: center;
+  background-color: #69171c;
+  border: none;
+  border-radius: 12px;
+  height: auto;
+  min-height: 56px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(105, 23, 28, 0.2);
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.15s ease;
+
+}
+.tag-pair:hover {
+  transform: translateX(3px);
+}
+
+.tag-left {
+  flex: 1;
+  padding: 8px 12px;
+  background:#69171c ;
+  color:#fbf3e9;
+  font-weight: 300;
+  border-right: 2px solid #70191d ;
+  text-align: center;
+}
+
+.tag-right {
+  flex: 0 0 80px;
+  padding: 8px 12px;
+  background: #fff8f0;
+  color: #69171c;
+  font-weight: 400;
+  text-align: center;
+  font-size: 0.9rem;
+}
+ 
+
+
+  
+  #education, #jobs ,#ratcont ,#connectedw{
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  background: #fff8f0;
+  border: 1.5px solid #e8d5c4;
+  border-radius: 16px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 16px rgba(112, 25, 29, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+  
+}
+
+#bigc
+{
+ display: flex;
+ flex-direction: column;
+}
+
+
+
+
+
+
+#headerc
+{
+   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; 
+  border-bottom: 2px solid #fecd6d;
+  padding-bottom: 8px;
+}
+
+
+
+#listcard
+
+{
+  
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;     
+ 
+
+}
+
+
+#connectedw
+{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-large;
+  color: #70191d;
+  padding-bottom: 5px;
+  cursor: pointer;
+  flex-wrap: nowrap;
+  margin-top: 30px;
+}
+
+#wordsc
+{
+  font-size: larger;
+   color:#2c1a08;
+   font-weight: bold;
+   margin-right:30px;
+
+}
+
+
+
+
+#ratcont
+{
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+#rating
+{
+  display: flex;
+  font-size: x-large;
+font-weight: 600;
+ color: #2c1a08;
+}
+#star
+{
+  display: flex;
+}
+
+#ratcont::before {
+  content: "Rating";
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-large;
+  color: #70191d;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #fecd6d;
+  padding-bottom: 5px;
+}
+
+#education::before {
+  content: "Education";
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-large;
+  color: #70191d;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #fecd6d;
+  padding-bottom: 5px;
+}
+
+#jobs::before {
+  content: " Experience";
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-large;
+  color: #70191d;
+  margin-bottom: 10px;
+  border-bottom: 2px solid  #70191d;
+  padding-bottom: 5px;
+}
+
+
+#contskillie::before
+{
+ 
+  content: "Skills";
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: bold;
+  font-size: x-large;
+  color: #70191d;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #fecd6d;
+  padding-bottom: 5px;
+
+}
+
+
+#contskillie
+{
+  
+  display: flex;
+  max-width: 800px;
+  margin-top: 10px;
+  padding: 28px 24px;
+  background: #fff8f0;
+  border: 1.5px solid #e8d5c4;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(112, 25, 29, 0.08);
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+
+}
+
+.frndcss
+{
+ 
+  text-decoration: none;
+  padding: 8px 12px;
+  background:#69171c ;
+  color:#fbf3e9;
+  font-weight: 300;
+  border-right: 2px solid #70191d ;
+  text-align: center;
+  font-size: large;
+}
+
+.frndcss:hover {
+  transform: scale(1.05)
+}
+
+#connectedw:hover {
+  transform: scale(1.02)
+}
+
+
+.skills-css
+{
+ background: linear-gradient(135deg, #70191d 0%, #9e2429 100%);
+  color: #fff8f0;
+  box-shadow: 0 2px 8px rgba(112, 25, 29, 0.25);
+
+}
+
+.skills-css:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(112, 25, 29, 0.35);
+}
