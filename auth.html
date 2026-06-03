@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogIn - Kroww</title>
-    <link rel="stylesheet" href="global.css">
+    <title>Account - Kroww</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <h1 class="logo">kroww</h1>
-            <div class="nav-right" id="navRight">
-                <button class="logout-btn" id="logoutBtn" style="display: none;">Logout</button>
-                <span class="user-info" id="userInfo" style="display: none;"></span>
-            </div>
+    <nav id="main-nav">
+        <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="auth.html" class="active">Account</a>
+        </div>
+        <div class="nav-btns" id="navRight">
+            <span class="user-info" id="userInfo" style="display: none;"></span>
+            <button class="btn-primary" id="logoutBtn" style="display: none;">Logout</button>
+            <button class="btn-ghost" id="loginBtn" style="display: none;">Login</button>
+            <button class="btn-primary" id="signupBtn" style="display: none;">Sign Up</button>
         </div>
     </nav>
 
@@ -24,9 +28,15 @@
                 <h2>Create Account</h2>
                 <form id="signupForm" class="auth-form">
                     <div class="form-group">
-                        <label for="signupName">Full Name</label>
-                        <input type="text" id="signupName" required>
-                        <span class="error" id="nameError"></span>
+                        <label for="signupFirstName">First Name</label>
+                        <input type="text" id="signupFirstName" required>
+                        <span class="error" id="firstNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupLastName">Last Name</label>
+                        <input type="text" id="signupLastName" required>
+                        <span class="error" id="lastNameError"></span>
                     </div>
 
                     <div class="form-group">
@@ -90,6 +100,27 @@
                 </form>
 
                 <p class="toggle-text">Don't have an account? <a href="#" id="toSignup">Sign up here</a></p>
+            </div>
+        </div>
+
+        <div class="auth-page" id="roleSelectionPage" style="display: none;">
+            <div class="auth-card">
+                <h2>Select Your Role</h2>
+                <p class="role-description">Choose how you want to use Kroww</p>
+                <div class="role-container">
+                    <div class="role-card">
+                        <div class="role-icon">🔍</div>
+                        <h3>Client</h3>
+                        <p>Post projects and hire skilled freelancers to get work done</p>
+                        <button class="btn btn-primary" onclick="authSystem.selectRole('client')">Choose Client</button>
+                    </div>
+                    <div class="role-card">
+                        <div class="role-icon">💼</div>
+                        <h3>Freelancer</h3>
+                        <p>Offer your skills and services to clients worldwide</p>
+                        <button class="btn btn-primary" onclick="authSystem.selectRole('freelancer')">Choose Freelancer</button>
+                    </div>
+                </div>
             </div>
         </div>
 
