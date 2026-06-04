@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "initials": "SP",
+      "avatarBg": "#FFF3CD",
+      "avatarColor": "#70191D",
+      "type": "work",
+      "hourlyRate": "$20/hr"
+    },
+    {
+      "id": 2,
+      "initials": "PP",
+      "avatarBg": "#DDEEFF",
+      "avatarColor": "#185FA5",
+      "type": "work",
+      "hourlyRate": "$15/hr"
+    },
+    {
+      "id": 3,
+      "initials": "IB",
+      "avatarBg": "#E8F4E8",
+      "avatarColor": "#27500A",
+      "type": "work",
+      "hourlyRate": "$25/hr"
+    },
+    {
+      "id": 4,
+      "initials": "LP",
+      "avatarBg": "#FFE8DE",
+      "avatarColor": "#993C1D",
+      "type": "work",
+      "hourlyRate": "$18/hr"
+    },
+    {
+      "id": 5,
+      "initials": "GF",
+      "avatarBg": "#F8E8F0",
+      "avatarColor": "#72243E",
+      "type": "work",
+      "hourlyRate": "$22/hr"
+    },
+    {
+      "id": 6,
+      "initials": "SF",
+      "avatarBg": "#FFF3CD",
+      "avatarColor": "#854F0B",
+      "type": "work",
+      "hourlyRate": "$30/hr"
+    },
+    {
+      "id": 7,
+      "initials": "KK",
+      "avatarBg": "#FFE8DE",
+      "avatarColor": "#993C1D",
+      "type": "work",
+      "hourlyRate": "$20/hr"
+    },
+    {
+      "id": 8,
+      "initials": "SS",
+      "avatarBg": "#DDEEFF",
+      "avatarColor": "#185FA5",
+      "type": "work",
+      "hourlyRate": "$35/hr"
+    }
+  ]
+}

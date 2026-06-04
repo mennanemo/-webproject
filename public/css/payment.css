@@ -1,0 +1,51 @@
+body.page-payment {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.payment-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.payment-container form {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border-solid);
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-container form label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: none;
+}
+
+.payment-container form input {
+  margin-bottom: 15px;
+}
+
+.pay {
+  margin-top: 1rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--satsuma);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  transition: background 0.2s;
+}
+
+.pay:hover { background: #b85218; }

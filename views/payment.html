@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment — Kroww</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/payment.css">
+</head>
+<body class="page-payment">
+  <div class="payment-container">
+    <form action="/submit-payment" method="POST">
+      <label for="card-number">Card Number:</label>
+      <input type="number" class="card-number" name="card-number" maxlength="16" required>
+      <label for="name">Name on Card:</label>
+      <input type="text" class="name" name="name" required>
+      <label for="expiry-date">Expiry Date:</label>
+      <input type="date" class="expiry-date" name="expiry-date" required>
+      <label for="cvv">CVV:</label>
+      <input type="text" class="cvv" name="cvv" required>
+      <button type="submit" class="pay">Pay Now</button>
+    </form>
+  </div>
+  <script src="../public/js/payment.js"></script>
+</body>
+</html>

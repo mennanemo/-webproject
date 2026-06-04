@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — Kroww</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/global.css">
+  <link rel="stylesheet" href="/public/css/dashboard-admin.css">
+</head>
+<body class="page-admin" data-page="a-dash">
+
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div class="admin-user-block">
+        <div class="label">Signed in as</div>
+        <div class="name">Admin User</div>
+      </div>
+      <div class="section-lbl">Main</div>
+      <a href="dashboard-admin.html" class="s-item on"><span class="ic">📊</span>Dashboard</a>
+      <a href="users.html" class="s-item"><span class="ic">👥</span>Users<span class="s-badge">2.4K</span></a>
+      <a href="services.html" class="s-item"><span class="ic">🛠️</span>Services</a>
+      <a href="payments.html" class="s-item"><span class="ic">💳</span>Payments<span class="s-badge">12</span></a>
+      <div class="section-lbl">Settings</div>
+      <a href="#" class="s-item"><span class="ic">⚙️</span>Site Settings</a>
+      <a href="#" class="s-item"><span class="ic">🔔</span>Notifications</a>
+      <a href="auth.html" class="s-item"><span class="ic">←</span>Exit Admin</a>
+    </div>
+
+    <div class="admin-main">
+      <h1>Dashboard</h1>
+      <p class="text-muted" style="margin-bottom:1.5rem;">Welcome back. Here's what's happening on Kroww today.</p>
+
+      <div class="a-stats">
+        <div class="a-stat"><div class="n">2,418</div><div class="l">Total Users</div><div class="chg">↑ +34 this week</div></div>
+        <div class="a-stat"><div class="n">8,901</div><div class="l">Services Listed</div><div class="chg">↑ +120 this week</div></div>
+        <div class="a-stat"><div class="n">3</div><div class="l">Open Disputes</div><div class="chg down">↑ needs attention</div></div>
+      </div>
+
+      <h3 style="margin-bottom:0.8rem;">Recent Transactions</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order #</th><th>Client</th><th>Freelancer</th><th>Service</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>#KR-20851</td><td>Mohamed D.</td><td>Sara M.</td><td>Logo Design</td><td>500 EGP</td><td><span class="badge badge-orange">In Escrow</span></td></tr>
+            <tr><td>#KR-20850</td><td>Amira L.</td><td>Karim B.</td><td>Web App</td><td>190 EGP</td><td><span class="badge badge-green">Released</span></td></tr>
+            <tr><td>#KR-20849</td><td>Ahmed R.</td><td>Lena F.</td><td>Blog Posts</td><td>2000 EGP</td><td><span class="badge badge-green">Released</span></td></tr>
+            <tr><td>#KR-20848</td><td>Sara K.</td><td>Omar N.</td><td>Social Ads</td><td>7000 EGP</td><td><span class="badge badge-red">Disputed</span></td></tr>
+            <tr><td>#KR-20847</td><td>Nour F.</td><td>Mira C.</td><td>UI Design</td><td>3000 EGP</td><td><span class="badge badge-blue">Under Review</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = [68,82,74,91,105,98,128];
+    const months = ['Oct','Nov','Dec','Jan','Feb','Mar','Apr'];
+    const max = Math.max(...data);
+    document.getElementById('chart').innerHTML = data.map((v,i)=>
+      `<div class="bar" style="height:${(v/max)*100}%;background:${i===data.length-1?'var(--crimson)':'var(--orange)'}"><span class="bar-lbl">$${v}K</span></div>`
+    ).join('');
+    document.getElementById('clabels').innerHTML = months.map(m=>`<span>${m}</span>`).join('');
+  </script>
+</body>
+</html>

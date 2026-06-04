@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Kroww</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/global.css">
+  <link rel="stylesheet" href="/public/css/dashboard.css">
+</head>
+<body class="page-dashboard" data-page="dashboard">
+
+  <div class="layout">
+    <div class="sidebar">
+      <div class="user-card">
+        <div class="user-av">JD</div>
+        <div><div class="user-name">Hana H.</div><div class="user-role">Client</div></div>
+      </div>
+      <div class="section-label">Overview</div>
+      <div class="nav-item on" onclick="show('overview',this)"><span class="ic">🏠</span>Dashboard</div>
+      <div class="nav-item" onclick="show('orders',this)"><span class="ic">📦</span>My Orders<span class="nav-badge">3</span></div>
+      <div class="nav-item" onclick="show('requests',this)"><span class="ic">📋</span>My Requests</div>
+      <div class="section-label">Communication</div>
+      <div class="nav-item" onclick="location.href='chat.html'"><span class="ic">💬</span>Messages<span class="nav-badge">2</span></div>
+      <div class="section-label">Account</div>
+      <div class="nav-item" onclick="location.href='payment.html'"><span class="ic">💳</span>Payments</div>
+      <div class="nav-item" onclick="location.href='profile.html'"><span class="ic">👤</span>Profile</div>
+      <div class="nav-item"><span class="ic">⚙️</span>Settings</div>
+    </div>
+
+    <div class="main">
+      <div class="panel on" id="p-overview">
+        <h2 style="margin-bottom:0.3rem;">Good morning, Hana 👋</h2>
+        <p class="text-muted" style="margin-bottom:1.5rem;">Here's what's happening with your projects.</p>
+        <div class="stats">
+          <div class="stat-card"><div class="n">3</div><div class="l">Active Orders</div></div>
+          <div class="stat-card"><div class="n">2</div><div class="l">Open Requests</div></div>
+          <div class="stat-card"><div class="n">$640</div><div class="l">In Escrow</div></div>
+          <div class="stat-card"><div class="n">12</div><div class="l">Total Projects</div></div>
+        </div>
+        <h3 style="margin-bottom:1rem;">Recent Activity</h3>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎨</div><div class="order-info"><div class="t">Logo Design — Sara M.</div><div class="m">Delivery in 2 days · $45</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">💻</div><div class="order-info"><div class="t">React Web App — Karim B.</div><div class="m">Awaiting your review · $120</div></div><span class="badge badge-blue">Under Review</span></div>
+          <div class="order-row"><div class="order-ic">✍️</div><div class="order-info"><div class="t">SEO Blog Posts — Lena F.</div><div class="m">Completed · $30</div></div><span class="badge badge-green">Done ✓</span></div>
+        </div>
+      </div>
+
+      <div class="panel" id="p-orders">
+        <h2 style="margin-bottom:1.5rem;">My Orders</h2>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎨</div><div class="order-info"><div class="t">Logo Design — Sara M.</div><div class="m">Due in 2 days · $45</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">💻</div><div class="order-info"><div class="t">React Web App — Karim B.</div><div class="m">Delivered · Awaiting approval · $120</div></div><span class="badge badge-blue">Review</span></div>
+          <div class="order-row"><div class="order-ic">📣</div><div class="order-info"><div class="t">Instagram Ads — Omar N.</div><div class="m">In progress · $85</div></div><span class="badge badge-orange">In Progress</span></div>
+          <div class="order-row"><div class="order-ic">✍️</div><div class="order-info"><div class="t">SEO Blog Posts — Lena F.</div><div class="m">Completed 1 week ago · $30</div></div><span class="badge badge-green">Done ✓</span></div>
+        </div>
+      </div>
+
+      <div class="panel" id="p-requests">
+        <div class="flex-between" style="margin-bottom:1.2rem;"><h2>My Requests</h2><a href="post-request.html" class="btn btn-red">+ New Request</a></div>
+        <div class="card" style="padding:0;">
+          <div class="order-row"><div class="order-ic">🎬</div><div class="order-info"><div class="t">YouTube video editing</div><div class="m">Posted 1 day ago · Budget: $60–$100</div></div><span class="badge badge-blue">4 Proposals</span></div>
+          <div class="order-row"><div class="order-ic">🌐</div><div class="order-info"><div class="t">Arabic → English translation</div><div class="m">Posted 3 days ago · Budget: $40</div></div><span class="badge badge-blue">7 Proposals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function show(id, el) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('on'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+      el.classList.add('on');
+      document.getElementById('p-' + id).classList.add('on');
+    }
+  </script>
+</body>
+</html>
