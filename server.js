@@ -1,16 +1,14 @@
 require('dotenv').config();
-const express   = require('express');
-const http      = require('http');
-const mongoose  = require('mongoose');
-const cors      = require('cors');
-const path      = require('path');
+const express = require('express');
+const http = require('http');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const path = require('path');
 const { Server } = require('socket.io');
 
-const apiRoutes = require('./controllers/api');
-
-const app    = express();
-const server = http.createServer(app);
-const io     = new Server(server, {
+const app= express();
+const server= http.createServer(app);
+const io = new Server(server, {
   cors: {
     origin: process.env.FRONTEND_URL || '*',
     methods: ['GET', 'POST']
@@ -23,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/controllers', express.static(path.join(__dirname, 'controllers')));
 app.use('/css', express.static(path.join(__dirname, 'views', 'css')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
 app.get('/data.json', (req, res) => res.sendFile(path.join(__dirname, 'data.json')));
 app.get('/file.json', (req, res) => res.sendFile(path.join(__dirname, 'file.json')));
@@ -31,9 +30,12 @@ app.get('/images/:file', (req, res) => res.sendFile(path.join(__dirname, 'images
 }));
 app.get('/dashboard%20-%20admin.html', (req, res) => res.redirect('/dashboard-admin.html'));
 
-app.use('/api', apiRoutes);
+app.use('/api/users', require('./routes/users'));
+app.use('/api/conversations', require('./routes/conversations'));
+app.use('/api/messages', require('./routes/messages'));
 
-app.get('/', (req, res) => res.json({ status: 'Kroww API running ✅' }));
+
+app.get('/', (req, res) => res.json({ status: 'Kroww API running' }));
 
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
