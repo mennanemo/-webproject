@@ -12,10 +12,24 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
-    cb(null, uuidv4() + path.extname(file.originalname));
+    cb(null, uuidv4() + path.extname(sanitize(file.originalname)));
   }
 });
-const upload = multer({ storage, limits: { fileSize: 20 * 1024 * 1024 } });
+
+const allowedTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+
+const fileFilter = (req,file,cb) => {
+ if (!allowedTypes.includes(file.mimetype))
+   return cb(
+      new Error('Invalid file type'),
+      false
+   );
+
+ cb(null,true);
+};
+
+const upload = multer({ storage, fileFilter, limits:{fileSize:20*1024*1024}  });
+const sanitize = require('sanitize-filename');
 
 exports.getMessages = async (req, res) => {
   try {
@@ -29,7 +43,7 @@ exports.getMessages = async (req, res) => {
       .limit(limit)
       .then(msgs => msgs.reverse()); 
 
-    const { userId } = req.query;
+      const userId = req.use.id;
     if (userId) {
       await Message.updateMany(
         { conversationId: req.params.conversationId, senderId: { $ne: userId }, read: false },
@@ -49,15 +63,7 @@ exports.createMessage = async (req, res) => {
   try {
     const { conversationId, senderId, type, text, offerPrice, offerDelivery, offerNote } = req.body;
 
-    const msg = await Message.create({
-      conversationId,
-      senderId,
-      type: type || 'text',
-      text,
-      offerPrice,
-      offerDelivery,
-      offerNote,
-    });
+    const msg = await Message.create({conversationId, senderId, type: type || 'text', text, offerPrice, offerDelivery, offerNote,});
 
     const populated = await msg.populate('senderId', 'name initials avatarColor');
 
@@ -93,20 +99,13 @@ exports.uploadFile = [
         ? (sizeKB / 1024).toFixed(1) + ' MB'
         : sizeKB.toFixed(0) + ' KB';
 
-      const msg = await Message.create({
-        conversationId,
-        senderId,
-        type:     'file',
-        fileName: file.originalname,
-        fileSize: sizeStr,
-        fileUrl:  `/uploads/${file.filename}`,
-      });
+      const msg = await Message.create({ conversationId, senderId, type:'file', fileName: sanitize(file.originalname), fileSize: sizeStr, fileUrl: `/uploads/${file.filename}`,});
 
       const populated = await msg.populate('senderId', 'name initials avatarColor');
 
       const conv = await Conversation.findById(conversationId);
       if (conv) {
-        conv.lastMessage   = `📎 ${file.originalname}`;
+        conv.lastMessage   = `📎 ${sanitize(file.originalname)}`;
         conv.lastMessageAt = new Date();
         conv.participants.forEach(pid => {
           if (pid.toString() !== senderId) {
