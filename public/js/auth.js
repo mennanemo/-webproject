@@ -1,42 +1,67 @@
+// ==================== Authentication System ====================
 
 class AuthSystem {
-    static ADMIN_EMAILS = ['admin@mail.com'];
+    static API_BASE = '/api';
 
     constructor() {
         this.currentUser = null;
-        this.users = this.loadUsers();
-        this.pendingUser = null; // Store user data during role selection
-        this.init();
+        this.pendingUser = null;
     }
 
-    init() {
-        this.attachEventListeners();
-        this.checkSession();
+    // ==================== API Helpers ====================
+
+    getToken() {
+        return localStorage.getItem('authToken');
     }
 
-
-    loadUsers() {
-        const users = localStorage.getItem('users');
-        return users ? JSON.parse(users) : [];
+    setToken(token) {
+        localStorage.setItem('authToken', token);
     }
 
-    saveUsers() {
-        localStorage.setItem('users', JSON.stringify(this.users));
+    clearToken() {
+        localStorage.removeItem('authToken');
     }
 
-    loadSession() {
-        const session = sessionStorage.getItem('current_user');
-        return session ? JSON.parse(session) : null;
+    async apiRequest(path, { method = 'GET', body, auth = false } = {}) {
+        const headers = { 'Content-Type': 'application/json' };
+
+        if (auth) {
+            const token = this.getToken();
+            if (token) {
+                headers.Authorization = `Bearer ${token}`;
+            }
+        }
+
+        const response = await fetch(`${AuthSystem.API_BASE}${path}`, {
+            method,
+            headers,
+            body: body ? JSON.stringify(body) : undefined
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Request failed');
+        }
+
+        return data;
     }
 
     saveSession(user) {
-        sessionStorage.setItem('current_user', JSON.stringify(user));
+        localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    loadSession() {
+        const raw = localStorage.getItem('currentUser');
+        return raw ? JSON.parse(raw) : null;
     }
 
     clearSession() {
-        sessionStorage.removeItem('current_user');
+        localStorage.removeItem('currentUser');
+        this.clearToken();
     }
 
+    // ==================== Validation ====================
 
     validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,51 +102,59 @@ class AuthSystem {
         return 'strong';
     }
 
+    isCurrentUserAdmin() {
+        return this.currentUser && this.currentUser.role === 'admin';
+    }
 
-    signup(firstName, lastName, email, phone, password, confirmPassword) {
+    needsRoleSelection(user) {
+        return user && !user.role;
+    }
 
-        this.clearErrors(['firstNameError', 'lastNameError', 'emailError', 'phoneError', 'passwordError', 'confirmError']);
+    resumeRoleSelection(user) {
+        this.pendingUser = user;
+        this.navigateToRoleSelection();
+        this.updateNavBar();
+    }
+
+    // ==================== Auth Operations ====================
+
+    async signup(firstName, lastName, email, phone, password, confirmPassword) {
+        this.clearErrors([
+            'firstNameError',
+            'lastNameError',
+            'emailError',
+            'phoneError',
+            'passwordError',
+            'confirmError'
+        ]);
 
         let hasError = false;
 
-        // Validate first name
         if (!this.validateName(firstName)) {
             this.showError('firstNameError', 'First name must be at least 2 characters');
             hasError = true;
         }
 
-        // Validate last name
         if (!this.validateName(lastName)) {
             this.showError('lastNameError', 'Last name must be at least 2 characters');
             hasError = true;
         }
 
-        // Validate email
         if (!this.validateEmail(email)) {
             this.showError('emailError', 'Invalid email format');
             hasError = true;
         }
 
-        // Check if email already exists
-        if (this.users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-            this.showError('emailError', 'Email already registered');
-            hasError = true;
-        }
-
-        // Validate phone
         if (!this.validatePhone(phone)) {
             this.showError('phoneError', 'Invalid phone format');
             hasError = true;
         }
 
-        // Validate password
         if (!this.validatePassword(password)) {
-            this.showError('passwordError', 
-                'Password must be at least 8 characters with uppercase, number, and special character (e.g., !@#$%^&*#-_)');
+            this.showError('passwordError', 'Password must be at least 8 characters with uppercase, number, and special character');
             hasError = true;
         }
 
-        // Check password confirmation
         if (password !== confirmPassword) {
             this.showError('confirmError', 'Passwords do not match');
             hasError = true;
@@ -130,53 +163,39 @@ class AuthSystem {
         if (hasError) return false;
 
         try {
-            // Create new user object (without saving yet)
-            const newUser = {
-                id: Date.now(),
-                firstName: firstName.trim(),
-                lastName: lastName.trim(),
-                email: email.toLowerCase(),
-                phone: phone.trim(),
-                password: password,
-                role: '', // Will be set after role selection
-                createdAt: new Date().toISOString()
-            };
+            const data = await this.apiRequest('/auth/signup', {
+                method: 'POST',
+                body: { firstName, lastName, email, phone, password }
+            });
 
-            // Store pending user and navigate to role selection
-            this.pendingUser = newUser;
-            this.showMessage('Account created! Please select your role.', 'success');
+            this.setToken(data.token);
+            this.pendingUser = data.user;
             this.navigateToRoleSelection();
-            return true;
+            return data.user;
         } catch (error) {
-            this.showMessage('Signup failed: ' + error.message, 'error');
+            if (error.message === 'Email already registered') {
+                this.showError('emailError', error.message);
+            } else {
+                this.showMessage('Signup failed: ' + error.message, 'error');
+            }
             return false;
         }
     }
 
-    selectRole(role) {
+    async selectRole(role) {
         if (!this.pendingUser) {
             this.showMessage('Error: No pending user found', 'error');
             return;
         }
 
         try {
-            // Security check: Only whitelisted emails can be admin
-            if (role === 'admin') {
-                if (!AuthSystem.ADMIN_EMAILS.includes(this.pendingUser.email)) {
-                    this.showMessage('Error: Your email is not authorized for admin role!', 'error');
-                    return;
-                }
-            }
+            const data = await this.apiRequest(`/users/${this.pendingUser.id}/role`, {
+                method: 'POST',
+                auth: true,
+                body: { role }
+            });
 
-            // Set the role
-            this.pendingUser.role = role;
-
-            // Save user to storage
-            this.users.push(this.pendingUser);
-            this.saveUsers();
-
-            // Set as current user and go to dashboard
-            this.currentUser = { ...this.pendingUser, password: undefined };
+            this.currentUser = data.user;
             this.saveSession(this.currentUser);
             this.pendingUser = null;
 
@@ -188,7 +207,7 @@ class AuthSystem {
         }
     }
 
-    login(email, password) {
+    async login(email, password) {
         // Clear previous errors
         this.clearErrors(['loginEmailError', 'loginPasswordError']);
 
@@ -208,39 +227,46 @@ class AuthSystem {
         if (hasError) return false;
 
         try {
-            // Find user
-            const user = this.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+            const data = await this.apiRequest('/auth/login', {
+                method: 'POST',
+                body: { email, password }
+            });
 
-            if (!user) {
-                this.showError('loginEmailError', 'Email not found');
-                return false;
+            this.setToken(data.token);
+
+            if (data.needsRoleSelection) {
+                this.resumeRoleSelection(data.user);
+                this.showMessage('Please complete role selection to continue.', 'success');
+                return true;
             }
 
-            // Verify password
-            if (password !== user.password) {
-                this.showError('loginPasswordError', 'Incorrect password');
-                return false;
-            }
-
-            // User has role assigned, go to dashboard
-            this.currentUser = { ...user, password: undefined };
+            this.currentUser = data.user;
             this.saveSession(this.currentUser);
             this.showMessage('Login successful!', 'success');
             this.navigateToDashboard();
             return true;
         } catch (error) {
-            this.showMessage('Login failed: ' + error.message, 'error');
+            if (error.message === 'Email not found') {
+                this.showError('loginEmailError', error.message);
+            } else if (error.message === 'Incorrect password') {
+                this.showError('loginPasswordError', error.message);
+            } else {
+                this.showMessage('Login failed: ' + error.message, 'error');
+            }
             return false;
         }
     }
 
     logout() {
         this.currentUser = null;
+        this.pendingUser = null;
         this.clearSession();
-        this.navigateToSignup();
-        this.showMessage('Logged out successfully', 'success');
+        this.navigateToLogin();
+        this.updateNavBar();
+        return true;
     }
 
+    // ==================== Navigation ====================
 
     navigateToSignup() {
         this.hidePage('loginPage');
@@ -248,6 +274,14 @@ class AuthSystem {
         this.hidePage('roleSelectionPage');
         this.showPage('signupPage');
         this.resetForm('signupForm');
+        this.clearErrors([
+            'firstNameError',
+            'lastNameError',
+            'emailError',
+            'phoneError',
+            'passwordError',
+            'confirmError'
+        ]);
         this.updateNavBar();
     }
 
@@ -287,6 +321,7 @@ class AuthSystem {
         if (page) page.style.display = 'none';
     }
 
+    // ==================== Dashboard ====================
 
     updateDashboard() {
         if (!this.currentUser) return;
@@ -313,41 +348,84 @@ class AuthSystem {
         }
     }
 
-    displayAllUsers() {
-        const tableBody = document.getElementById('usersTableBody');
-        tableBody.innerHTML = '';
+    async displayAllUsers() {
+        try {
+            const data = await this.apiRequest('/users', { auth: true });
+            const tableBody = document.getElementById('usersTableBody');
+            tableBody.innerHTML = '';
 
-        this.users.forEach(
-            user => {            if (user.role === 'admin') return;
-             const row = tableBody.insertRow();
-            row.innerHTML = `
-                <td>${user.name}</td>
-                <td>${user.email}</td>
-                <td>${user.phone}</td>
-                <td>${user.role || 'N/A'}</td>
-                <td><button class="btn btn-delete" onclick="authSystem.deleteUser(${user.id})">Delete</button></td>
-            `;
-        });
+            data.users.forEach((user) => {
+                if (user.role === 'admin') return;
 
-        document.getElementById('usersListContainer').style.display = 'block';
+                const row = tableBody.insertRow();
+                const fullName = `${user.firstName} ${user.lastName}`;
+
+                const nameCell = row.insertCell();
+                nameCell.textContent = fullName;
+
+                const emailCell = row.insertCell();
+                emailCell.textContent = user.email;
+
+                const phoneCell = row.insertCell();
+                phoneCell.textContent = user.phone;
+
+                const roleCell = row.insertCell();
+                roleCell.textContent = user.role || 'N/A';
+
+                const actionCell = row.insertCell();
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn btn-delete';
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', () => this.deleteUser(user.id));
+                actionCell.appendChild(deleteBtn);
+            });
+
+            document.getElementById('usersListContainer').style.display = 'block';
+        } catch (error) {
+            this.showMessage('Failed to load users: ' + error.message, 'error');
+        }
     }
 
-    deleteUser(userId) {
+    async deleteUser(userId) {
         if (!confirm('Are you sure you want to delete this user?')) {
             return;
         }
 
-        // Find and remove user from array
-        const userIndex = this.users.findIndex(u => u.id === userId);
-        if (userIndex !== -1) {
-            const deletedUser = this.users[userIndex];
-            this.users.splice(userIndex, 1);
-            this.saveUsers();
+        try {
+            await this.apiRequest(`/users/${userId}`, {
+                method: 'DELETE',
+                auth: true
+            });
             this.displayAllUsers();
-            this.showMessage(`User ${deletedUser.name} has been deleted.`, 'success');
+            this.showMessage('User has been deleted.', 'success');
+        } catch (error) {
+            this.showMessage('Delete failed: ' + error.message, 'error');
         }
     }
 
+    async createAdmin(email) {
+        // Validate inputs
+        if (!this.validateEmail(email)) {
+            throw new Error('Invalid email format');
+        }
+
+        try {
+            const data = await this.apiRequest('/users/admin/create', {
+                method: 'POST',
+                auth: true,
+                body: { email }
+            });
+
+            this.showMessage(data.message, 'success');
+            this.resetForm('createAdminForm');
+            document.getElementById('newAdminEmailError').textContent = '';
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // ==================== UI Updates ====================
 
     updateNavBar() {
         const navRight = document.getElementById('navRight');
@@ -424,6 +502,7 @@ class AuthSystem {
         }
     }
 
+    // ==================== Event Listeners ====================
 
     attachEventListeners() {
         // Navigation
@@ -456,7 +535,7 @@ class AuthSystem {
         }
 
         // Forms
-        document.getElementById('signupForm').addEventListener('submit', (e) => {
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const firstName = document.getElementById('signupFirstName').value;
             const lastName = document.getElementById('signupLastName').value;
@@ -465,15 +544,15 @@ class AuthSystem {
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            this.signup(firstName, lastName, email, phone, password, confirmPassword);
+            await this.signup(firstName, lastName, email, phone, password, confirmPassword);
         });
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            this.login(email, password);
+            await this.login(email, password);
         });
 
         // Password strength indicator
@@ -498,6 +577,17 @@ class AuthSystem {
         document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
         document.getElementById('logoutDashboardBtn').addEventListener('click', () => this.logout());
 
+        // Admin - Create Admin
+        document.getElementById('createAdminForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const email = document.getElementById('newAdminEmail').value;
+                await this.createAdmin(email);
+            } catch (error) {
+                this.showError('newAdminEmailError', error.message);
+            }
+        });
+
         // Admin - View Users
         document.getElementById('viewUsersBtn').addEventListener('click', () => {
             this.displayAllUsers();
@@ -521,25 +611,42 @@ class AuthSystem {
         });
     }
 
+    // ==================== Session Check ====================
 
-    checkSession() {
-        const sessionUser = this.loadSession();
+    async checkSession() {
+        const token = this.getToken();
 
-        if (sessionUser) {
-            this.currentUser = sessionUser;
-            this.navigateToDashboard();
-            this.updateNavBar();
-        } else {
-            const hash = window.location.hash;
-            if (hash === '#login') {
-                this.navigateToLogin();
-            } else {
-                this.navigateToSignup();
+        if (token) {
+            try {
+                const data = await this.apiRequest('/auth/me', { auth: true });
+
+                if (this.needsRoleSelection(data.user)) {
+                    this.pendingUser = data.user;
+                    this.currentUser = null;
+                    this.navigateToRoleSelection();
+                    this.updateNavBar();
+                    return;
+                }
+
+                this.currentUser = data.user;
+                this.pendingUser = null;
+                this.saveSession(this.currentUser);
+                this.navigateToDashboard();
+                this.updateNavBar();
+                return;
+            } catch (error) {
+                this.clearSession();
             }
-            this.updateNavBar();
         }
 
-        // Handle browser hash changes dynamically
+        const hash = window.location.hash;
+        if (hash === '#login') {
+            this.navigateToLogin();
+        } else {
+            this.navigateToSignup();
+        }
+        this.updateNavBar();
+
         window.addEventListener('hashchange', () => {
             if (!this.currentUser) {
                 const newHash = window.location.hash;
@@ -553,12 +660,17 @@ class AuthSystem {
     }
 }
 
+// ==================== Initialize ====================
+
 let authSystem;
 
 document.addEventListener('DOMContentLoaded', () => {
     authSystem = new AuthSystem();
+    authSystem.attachEventListeners();
+    authSystem.checkSession();
 });
 
+// ==================== Utility Functions ====================
 
 function closeMessage() {
     document.getElementById('successMessage').classList.remove('show');

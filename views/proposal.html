@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposal — Kroww</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/global.css">
+  <link rel="stylesheet" href="/public/css/proposal.css">
+</head>
+<body class="page-proposal">
+
+  <nav id="main-nav">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
+    <div class="nav-links">
+      <a href="searching.html">Search</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="chat.html">Messages</a>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ghost" onclick="history.back()">← Back to chat</button>
+    </div>
+  </nav>
+
+  <main class="proposal-main">
+    <div class="proposal-container">
+
+      
+      <div class="proposal-card" id="proposal-card">
+        <div class="proposal-status-bar">
+          <span class="status-dot pending"></span>
+          <span class="status-label" id="status-label">Awaiting response</span>
+        </div>
+
+        <div class="proposal-header">
+          <div class="proposal-icon">📋</div>
+          <div>
+            <h1 class="proposal-title">Job Proposal</h1>
+            <p class="proposal-subtitle">Review the details and respond below</p>
+          </div>
+        </div>
+
+        <div class="proposal-divider"></div>
+
+       
+        <div class="proposal-section">
+          <div class="proposal-section-label">Job details</div>
+          <div class="detail-row">
+            <span class="detail-key">Job title</span>
+            <span class="detail-val" id="prop-job-title">Loading...</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Client</span>
+            <span class="detail-val" id="prop-client-name">Loading...</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Freelancer</span>
+            <span class="detail-val" id="prop-freelancer-name">Loading...</span>
+          </div>
+        </div>
+
+        <div class="proposal-divider"></div>
+
+        
+        <div class="proposal-section price-section">
+          <div class="proposal-section-label">Agreed price</div>
+          <div class="price-display">
+            <span class="price-amount" id="prop-price">$0</span>
+            <span class="price-note">Held in escrow until job is complete</span>
+          </div>
+          <div class="escrow-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Secured by Kroww Escrow
+          </div>
+        </div>
+
+        <div class="proposal-divider"></div>
+
+        
+        <div class="proposal-section">
+          <div class="proposal-section-label">Message from freelancer</div>
+          <div class="freelancer-message" id="prop-message">
+            "I've reviewed the job and I'm confident I can deliver exactly what you need. Looking forward to working with you."
+          </div>
+        </div>
+
+        <div class="proposal-divider"></div>
+
+       
+        <div class="proposal-actions" id="proposal-actions">
+          <button class="btn-reject" onclick="handleReject()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Decline
+          </button>
+          <button class="btn-accept" onclick="handleAccept()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Accept &amp; Pay
+          </button>
+        </div>
+
+       
+        <div class="proposal-result" id="proposal-result" style="display:none;"></div>
+      </div>
+
+   
+      <div class="proposal-sidebar">
+        <div class="sidebar-card how-card">
+          <h3>How this works</h3>
+          <ol class="how-list">
+            <li>
+              <span class="how-num">1</span>
+              <div>
+                <strong>Review the proposal</strong>
+                <p>Check the job details and agreed price carefully.</p>
+              </div>
+            </li>
+            <li>
+              <span class="how-num">2</span>
+              <div>
+                <strong>Accept &amp; Pay</strong>
+                <p>Clicking accept takes you to the payment page. Your money is held safely in escrow.</p>
+              </div>
+            </li>
+            <li>
+              <span class="how-num">3</span>
+              <div>
+                <strong>Work gets done</strong>
+                <p>Once you confirm the job is complete, the money is released to the freelancer.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="sidebar-card trust-card">
+          <div class="trust-icon">🔒</div>
+          <h4>Your money is safe</h4>
+          <p>Payment is held in escrow and only released when you confirm the work is done to your satisfaction.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="/public/js/proposal.js"></script>
+</body>
+</html>

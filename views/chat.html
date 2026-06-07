@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/global.css">
   <link rel="stylesheet" href="/public/css/chat.css">
+  <link rel="stylesheet" href="/public/css/notifications.css">
 </head>
 <body class="page-chat" data-page="chat">
 
@@ -14,6 +15,7 @@
     <div class="left-panel">
       <div class="lp-head">
         <h3>Messages</h3>
+        <div id="notif-mount"></div>
         <div class="lp-search"><span>🔍</span><input type="text" placeholder="Search…" oninput="filterC(this.value)"/></div>
       </div>
       <div class="contacts" id="contacts">
@@ -50,6 +52,7 @@
           <button class="tbtn" onclick="attachFile()" title="Attach">📎</button>
           <button class="tbtn" onclick="showModal()" title="Send offer">💰</button>
           <button class="tbtn" title="Emoji">😊</button>
+          <button class="tbtn proposal-tbtn" onclick="createProposal()" title="Send Proposal">📋</button>
         </div>
         <div class="input-row">
           <textarea id="msg-in" placeholder="Type a message" rows="1" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
@@ -100,7 +103,8 @@
     </div>
   </div>
 
-  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/public/js/notifications.js"></script>
   <script src="/public/js/chat.js"></script>
 </body>
 </html>

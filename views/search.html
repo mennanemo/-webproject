@@ -3,22 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kroww — Short-term freelance, done right</title>
+  <title>Search - Kroww</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/global.css">
-  <link rel="stylesheet" href="/public/css/index.css">
+  <link rel="stylesheet" href="/public/css/search.css">
 </head>
-<body class="page-index page-landing">
+<body class="page-index">
 
- 
   <nav id="main-nav">
     <a class="logo" href="index.html"><span class="logo-dot"></span>Kroww</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#" onclick="openModal();return false;">Post a need</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="chat.html">Messages</a>
+    </div>
     <div class="nav-btns">
-      <button class="btn-ghost" onclick="window.location.href='auth.html'">Log in</button>
-      <button class="btn-find-people" onclick="window.location.href='auth.html'">Sign up</button>
+      <button class="btn-ghost nav-post-btn" onclick="openModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Post a need
+      </button>
+      <button class="btn-find-people" onclick="document.getElementById('search-input').focus()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Find people
+      </button>
     </div>
   </nav>
-
 
   <section class="hero">
     <div class="hero-orb o1"></div>
@@ -28,87 +38,51 @@
     <h1>Find work or hire someone <span class="accent">fast</span></h1>
     <p>Search by skill or job title — see matching profiles with their name and skills instantly.</p>
     <div class="search-wrap">
-      <input id="search-input" type="text" placeholder='Try "Artist", "C++", "Python"...' onfocus="handleAuthRedirect(event)">
-      <button class="btn-search" onclick="handleAuthSearch()">Search</button>
+      <input id="search-input" type="text" placeholder='Try "Artist", "C++", "Python"...'>
+      <button class="btn-search" onclick="doSearch()">Search</button>
     </div>
     <div class="hero-tags">
-      <span class="hero-tag" onclick="handleAuthRedirect()">Artist</span>
-      <span class="hero-tag" onclick="handleAuthRedirect()">C++</span>
-      <span class="hero-tag" onclick="handleAuthRedirect()">Python</span>
-      <span class="hero-tag" onclick="handleAuthRedirect()">Ethical Hacker</span>
-      <span class="hero-tag" onclick="handleAuthRedirect()">Game Developer</span>
+      <span class="hero-tag">Artist</span>
+      <span class="hero-tag">C++</span>
+      <span class="hero-tag">Python</span>
+      <span class="hero-tag">Ethical Hacker</span>
+      <span class="hero-tag">Game Developer</span>
     </div>
   </section>
 
- 
   <div class="stats-row">
     <div class="stat-cell" data-delay="0"><span class="stat-num">0</span><div class="stat-label">Freelancers registered</div></div>
     <div class="stat-cell" data-delay="150"><span class="stat-num">0</span><div class="stat-label">Jobs posted this week</div></div>
     <div class="stat-cell" data-delay="300"><span class="stat-num">0</span><div class="stat-label">Successful matches</div></div>
   </div>
 
-  
-  <section class="how-section">
-    <div class="how-inner">
-      <div class="section-label">How it works</div>
-      <h2 class="section-title">Three steps to get it done</h2>
-      <p class="section-sub">Whether you're looking for work or need someone fast — Kroww connects you in minutes.</p>
-      <div class="how-steps">
-        <div class="how-step reveal">
-          <div class="step-number">01</div>
-          <div class="step-icon">🔍</div>
-          <h3>Search or post</h3>
-          <p>Browse profiles by skill or post what you need. Takes 30 seconds.</p>
-        </div>
-        <div class="how-connector"></div>
-        <div class="how-step reveal">
-          <div class="step-number">02</div>
-          <div class="step-icon">💬</div>
-          <h3>Connect &amp; agree</h3>
-          <p>Chat directly, discuss the scope, and agree on a price — no middlemen.</p>
-        </div>
-        <div class="how-connector"></div>
-        <div class="how-step reveal">
-          <div class="step-number">03</div>
-          <div class="step-icon">✅</div>
-          <h3>Pay securely</h3>
-          <p>Pay through escrow — money releases only when the work is done.</p>
-        </div>
+  <section class="results-section" id="results-section">
+    <div class="results-bar">
+      <div class="results-label" id="results-label">Results</div>
+      <div class="results-meta">
+        <span class="results-count" id="results-count"></span>
+        <button class="clear-btn" onclick="clearSearch()">✕ Clear</button>
       </div>
+    </div>
+    <div class="result-list" id="result-list"></div>
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <p>No profiles match that search.<br>Try a different skill or name.</p>
     </div>
   </section>
 
-  
-  <section class="why-section">
-    <div class="why-inner">
-      <div class="section-label">Why Kroww</div>
-      <h2 class="section-title">Built for short-term work</h2>
-      <div class="why-grid">
-        <div class="why-card reveal">
-          <div class="why-icon">⚡</div>
-          <h4>Fast matching</h4>
-          <p>Find the right person in minutes, not days. Search by skill, see results instantly.</p>
-        </div>
-        <div class="why-card reveal">
-          <div class="why-icon">🔒</div>
-          <h4>Secure payments</h4>
-          <p>Escrow holds your money until the job is done. No risk, no disputes.</p>
-        </div>
-        <div class="why-card reveal">
-          <div class="why-icon">⭐</div>
-          <h4>Honest reviews</h4>
-          <p>Both sides rate each other after every job. Trust is built in.</p>
-        </div>
-        <div class="why-card reveal">
-          <div class="why-icon">💬</div>
-          <h4>Built-in chat</h4>
-          <p>Negotiate and align without leaving the platform. Everything in one place.</p>
-        </div>
-      </div>
+  <section class="cta-section">
+    <div class="cta-orb o1"></div>
+    <div class="cta-orb o2"></div>
+    <h2>Ready to get started?</h2>
+    <p>Post what you need or find your next short-term gig in minutes.</p>
+    <div class="cta-btns">
+      <button class="btn-yellow" onclick="openModal()">Post a need</button>
+      <button class="btn-outline-yellow" onclick="document.getElementById('search-input').focus()">Search profiles</button>
     </div>
   </section>
 
-  
+
   <footer class="footer searching-footer">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -133,16 +107,16 @@
       <div class="footer-links-grid">
         <div class="footer-col">
           <h4>Explore</h4>
-          <a href="auth.html" onclick="return redirectToAuth(event)">Search Freelancers</a>
-          <a href="auth.html" onclick="return redirectToAuth(event)">Browse Profiles</a>
+          <a href="searching.html">Search Freelancers</a>
+          <a href="searching.html">Browse Profiles</a>
           <a href="#">How It Works</a>
         </div>
         <div class="footer-col">
           <h4>Account</h4>
           <a href="auth.html">Sign In / Sign Up</a>
-          <a href="auth.html" onclick="return redirectToAuth(event)">Dashboard</a>
-          <a href="auth.html" onclick="return redirectToAuth(event)">Messages</a>
-          <a href="auth.html" onclick="return redirectToAuth(event)">Payments</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="chat.html">Messages</a>
+          <a href="payment.html">Payments</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
@@ -166,7 +140,33 @@
     </div>
   </footer>
 
+  
+  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-title">Create a post</div>
+      <label>I want to...</label>
+      <div class="type-toggle">
+        <button class="type-btn active-hire" id="btn-hire" onclick="setType('hire')">Hire someone</button>
+        <button class="type-btn" id="btn-work" onclick="setType('work')">Find work</button>
+      </div>
+      <label>Your name</label>
+      <input type="text" id="p-name" placeholder="e.g. Ahmed Hassan">
+      <label>Job title / what you need</label>
+      <input type="text" id="p-title" placeholder="e.g. Need a video editor for 2 days">
+      <label>Description</label>
+      <textarea id="p-desc" rows="3" placeholder="Describe what you need or offer..."></textarea>
+      <label>Skills (comma separated)</label>
+      <input type="text" id="p-skills" placeholder="e.g. Premiere Pro, After Effects">
+      <label>Location</label>
+      <input type="text" id="p-location" placeholder="e.g. Cairo · Remote">
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-post" onclick="submitPost()">Publish post</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
-  <script src="/public/js/index.js"></script>
+  <script src="/public/js/search.js"></script>
 </body>
 </html>
