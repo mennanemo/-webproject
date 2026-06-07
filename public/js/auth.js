@@ -232,6 +232,8 @@ class AuthSystem {
             this.showMessage('Login failed: ' + error.message, 'error');
             return false;
         }
+        localStorage.setItem('kroww_user_id', user._id);
+        window.location.href = '/chat.html';
     }
 
     logout() {
@@ -538,8 +540,7 @@ class AuthSystem {
             }
             this.updateNavBar();
         }
-
-        // Handle browser hash changes dynamically
+        
         window.addEventListener('hashchange', () => {
             if (!this.currentUser) {
                 const newHash = window.location.hash;
