@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   await loadContacts();
+
+  updateProposalButtonVisibility();
 });
 
 async function apiFetch(path, options = {}) {
@@ -115,6 +117,8 @@ async function openConv(convId) {
   }
 
   await loadMessages(convId);
+
+  updateProposalButtonVisibility();
 }
 
 async function loadMessages(convId) {
@@ -305,3 +309,145 @@ function filterC(v) { renderContacts(v); }
 
 function showModal()  { document.getElementById('modal').classList.add('show'); }
 function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+
+async function createProposal() {
+  
+  if (!activeConvId || !activeContact) {
+    showToastMessage('Please select a conversation first');
+    return;
+  }
+  
+  
+  const other = getOtherParticipant(activeContact);
+  if (!other) {
+    showToastMessage('Could not find the other participant');
+    return;
+  }
+  
+  
+  const userData = localStorage.getItem('kroww_user');
+  if (!userData) {
+    showToastMessage('Please log in first');
+    return;
+  }
+  
+  const currentUser = JSON.parse(userData);
+  if (currentUser.role !== 'freelancer') {
+    showToastMessage('Only freelancers can send proposals');
+    return;
+  }
+  
+ 
+  const jobTitle = activeContact.requestTitle || prompt('Enter the job title:', 'Freelance Project');
+  if (!jobTitle) return;
+  
+  const agreedPrice = prompt('Enter the agreed price (USD):', '100');
+  if (!agreedPrice) return;
+  
+  if (isNaN(agreedPrice) || Number(agreedPrice) <= 0) {
+    showToastMessage('Please enter a valid price');
+    return;
+  }
+  
+  
+  const proposalBtn = document.querySelector('.proposal-tbtn');
+  const originalText = proposalBtn.innerHTML;
+  proposalBtn.innerHTML = '⏳';
+  proposalBtn.disabled = true;
+  
+  try {
+   
+    const response = await fetch('/api/proposals/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jobId: activeConvId,
+        clientId: other._id,
+        chatId: activeConvId,
+        agreedPrice: Number(agreedPrice),
+        jobTitle: jobTitle,
+        message: 'I am ready to start working on this project. Please review the proposal.',
+        deliveryDays: 5
+      })
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to create proposal');
+    }
+    
+    const data = await response.json();
+    showToastMessage('✅ Proposal created successfully!');
+    
+    
+    setTimeout(() => {
+      window.location.href = `/proposal.html?proposalId=${data.proposalId}`;
+    }, 1000);
+    
+  } catch (err) {
+    console.error('Proposal error:', err);
+    showToastMessage('❌ Error: ' + err.message);
+    proposalBtn.innerHTML = originalText;
+    proposalBtn.disabled = false;
+  }
+}
+
+
+function showToastMessage(message) {
+  let toast = document.getElementById('chat-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'chat-toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--burgundy);
+      color: var(--yellow);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    `;
+    document.body.appendChild(toast);
+  }
+  
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 3000);
+}
+
+
+function updateProposalButtonVisibility() {
+  const proposalBtn = document.querySelector('.proposal-tbtn');
+  if (!proposalBtn) return;
+  
+  const userData = localStorage.getItem('kroww_user');
+  if (!userData) {
+    proposalBtn.style.display = 'none';
+    return;
+  }
+  
+  try {
+    const user = JSON.parse(userData);
+    
+    if (user.role === 'freelancer') {
+      proposalBtn.style.display = 'inline-flex';
+    } else {
+      proposalBtn.style.display = 'none';
+    }
+  } catch (e) {
+    proposalBtn.style.display = 'none';
+  }
+}
+

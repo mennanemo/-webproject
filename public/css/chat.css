@@ -318,3 +318,22 @@ body.page-chat {
   .chat-app { grid-template-columns: 1fr; }
   .left-panel { display: none; }
 }
+
+
+.proposal-tbtn {
+  background: var(--burgundy);
+  color: var(--yellow);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.proposal-tbtn:hover {
+  background: var(--yellow);
+  color: var(--burgundy);
+  transform: scale(1.05);
+}

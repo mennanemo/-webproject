@@ -180,9 +180,13 @@ class AuthSystem {
             this.saveSession(this.currentUser);
             this.pendingUser = null;
 
+            localStorage.setItem('kroww_user_id', this.currentUser.id.toString());
+            localStorage.setItem('kroww_user', JSON.stringify(this.currentUser));
+
+
             const fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
             this.showMessage(`Welcome, ${fullName}!`, 'success');
-            this.navigateToDashboard();
+            window.location.href = 'search.html';
         } catch (error) {
             this.showMessage('Error selecting role: ' + error.message, 'error');
         }
@@ -222,11 +226,15 @@ class AuthSystem {
                 return false;
             }
 
-            // User has role assigned, go to dashboard
+            
             this.currentUser = { ...user, password: undefined };
             this.saveSession(this.currentUser);
+
+            localStorage.setItem('kroww_user_id', this.currentUser.id.toString());
+            localStorage.setItem('kroww_user', JSON.stringify(this.currentUser));
+
             this.showMessage('Login successful!', 'success');
-            this.navigateToDashboard();
+            window.location.href = 'search.html';
             return true;
         } catch (error) {
             this.showMessage('Login failed: ' + error.message, 'error');
