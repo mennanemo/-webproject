@@ -1,5 +1,5 @@
-const API_URL = 'http://localhost:3000/api';
-const SOCKET_URL = 'http://localhost:3000';
+const API_URL= '/api';
+const SOCKET_URL = window.location.origin;
 
 let MY_USER_ID = localStorage.getItem('kroww_user_id') || '';
 
@@ -31,17 +31,8 @@ let activeContact = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (!MY_USER_ID) {
-    const id = prompt('Paste your User ID from seed.js output (or leave blank to use demo mode):');
-    if (id && id.trim()) {
-      MY_USER_ID = id.trim();
-      localStorage.setItem('kroww_user_id', MY_USER_ID);
-    } else {
-      const users = await apiFetch('/users');
-      if (users && users.length) {
-        MY_USER_ID = users[0]._id;
-        localStorage.setItem('kroww_user_id', MY_USER_ID);
-      }
-    }
+    window.location.href = '/auth.html';
+    return;
   }
   await loadContacts();
 });
