@@ -33,13 +33,15 @@ app.get('/dashboard%20-%20admin.html', (req, res) => res.redirect('/dashboard-ad
 app.use('/api/users', require('./routes/users'));
 app.use('/api/conversations', require('./routes/conversations'));
 app.use('/api/messages', require('./routes/messages'));
-app.use('/api/proposals', require('./routes/proposal'));
+app.use('/api/proposal', require('./routes/proposal'));
 app.use('/api/reviews', require('./routes/review'));
+app.use('/api/notifications', require('./routes/notifications'));
+
 
 app.get('/', (req, res) => res.json({ status: 'Kroww API running' }));
 
 io.on('connection', (socket) => {
-  console.log('🔌 Client connected:', socket.id);
+  console.log('Client connected:', socket.id);
 
   socket.on('join_room', (conversationId) => {
     socket.join(conversationId);
@@ -63,7 +65,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('❌ Client disconnected:', socket.id);
+    console.log('Client disconnected:', socket.id);
   });
 });
 
@@ -72,10 +74,10 @@ const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/kroww';
 
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('✅ MongoDB connected');
-    server.listen(PORT, () => console.log(` Server running on http://localhost:${PORT}`));
+    console.log('MongoDB connected');
+    server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
   })
   .catch(err => {
-    console.error('❌ MongoDB connection error:', err.message);
+    console.error('MongoDB connection error:', err.message);
     process.exit(1);
   });

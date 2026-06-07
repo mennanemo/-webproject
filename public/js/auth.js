@@ -548,7 +548,8 @@ class AuthSystem {
             }
             this.updateNavBar();
         }
-        
+
+        // Handle browser hash changes dynamically
         window.addEventListener('hashchange', () => {
             if (!this.currentUser) {
                 const newHash = window.location.hash;
