@@ -37,12 +37,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   await loadContacts();
-<<<<<<< HEAD
 
   updateProposalButtonVisibility();
-=======
   Notifications.init(MY_USER_ID);
->>>>>>> 095d6dd3ed6230e2e44dbba7dfe29a9991724960
 });
 
 async function apiFetch(path, options = {}) {
