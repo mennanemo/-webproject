@@ -11,7 +11,9 @@ socket.on('receive_message', (msg) => {
   if (msg.conversationId === activeConvId) {
     appendMessage(msg, false);
     scrollToBottom();
+    Notifications.markRead(activeConvId); 
   }
+  Notifications.onNewMessage(msg);
   loadContacts();
 });
 
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
   await loadContacts();
+  Notifications.init(MY_USER_ID);
 });
 
 async function apiFetch(path, options = {}) {
@@ -262,7 +265,6 @@ async function respondOffer(msgId, status) {
     body: JSON.stringify({ status }),
   });
   if (!msg) return;
-  // Re-render this message in place
   const existing = document.querySelector(`[data-id="${msgId}"]`);
   if (existing) existing.remove();
   appendMessage(msg);
