@@ -72,7 +72,7 @@ const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/kroww';
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB connected');
-    server.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+    server.listen(PORT, () => console.log(` Server running on http://localhost:${PORT}`));
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err.message);
