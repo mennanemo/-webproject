@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Header container matching the footer gradient and design style */
+.parent-header {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(135deg, #DE2910 0%, #B21807 100%);
+    color: #FFFFFF;
+    padding: 18px 60px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 9999;
+}
+
+/* Background Pattern matching the footer */
+.parent-header .bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../images/footer_pattern.png');
+    background-repeat: repeat;
+    background-size: 250px;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Main inner container matching the footer layout boundaries */
+.header-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo Section & styling from the footer logo styling */
+.logo-section .logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-family: 'Outfit', 'Gill Sans', sans-serif;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logo-section .logo:hover {
+    transform: translateY(-2px);
+}
+
+/* Center Nav Links styled with the footer list links logic */
+.nav-links {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1.5px;
+    bottom: -3px;
+    left: 0;
+    background-color: #FFD700;
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover {
+    color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Right Section - Auth & Extra Actions */
+.auth-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Required: Login Link (Styled similarly to navigation links but bold for emphasis) */
+.auth-section .link-login {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.auth-section .link-login::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1.5px;
+    bottom: -3px;
+    left: 0;
+    background-color: #FFD700;
+    transition: width 0.25s ease;
+}
+
+.auth-section .link-login:hover {
+    color: #FFD700;
+    transform: translateY(-1px);
+}
+
+.auth-section .link-login:hover::after {
+    width: 100%;
+}
+
+/* Required: Sign Up Button (Styled like the footer search button) */
+.auth-section .btn-signup {
+    text-decoration: none;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    color: #DE2910;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+    display: inline-block;
+    text-align: center;
+}
+
+.auth-section .btn-signup:hover {
+    background-color: #FFD700;
+    color: #8C1004;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.35);
+}
+
+/* Recommended: Post a Job Button (Outlined/Ghost style for professional hierarchy) */
+.auth-section .btn-post-job {
+    text-decoration: none;
+    padding: 9px 20px;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 30px;
+    background-color: transparent;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.auth-section .btn-post-job:hover {
+    background-color: #FFFFFF;
+    color: #DE2910;
+    border-color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* User Balance Input Styling */
+.auth-section .balance-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 6px 16px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.auth-section .balance-container:focus-within {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.auth-section .balance-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+.auth-section .balance-input {
+    border: none;
+    background: transparent;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    width: 65px;
+    outline: none;
+    font-family: 'Outfit', 'Gill Sans', sans-serif;
+}
+
+/* Hide number input spinner */
+.auth-section .balance-input::-webkit-outer-spin-button,
+.auth-section .balance-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.auth-section .balance-input {
+    -moz-appearance: textfield;
+}
+
+/* Responsive design - Stacks layout gracefully on small screens */
+@media (max-width: 900px) {
+    .parent-header {
+        padding: 20px 30px;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .auth-section {
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+    }
+}
