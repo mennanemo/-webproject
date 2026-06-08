@@ -4,23 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account - Kroww</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/fotter.css">
 </head>
 <body>
-    <nav id="main-nav">
-        <a class="logo" href="/"><span class="logo-dot"></span>Kroww</a>
-        <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="/auth.html" class="active">Account</a>
+    <header class="parent-header">
+        <!-- Transparent background pattern matching footer -->
+        <div class="bg-pattern"></div>
+        
+        <div class="header-container">
+            <!-- Left Info Section / Logo -->
+            <div class="logo-section">
+                <a class="logo" href="/">KROWW</a>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/auth.html" class="active">Account</a>
+                <a href="#">Jobs</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+            </nav>
+            
+            <div class="auth-section" id="navRight">
+                <span class="user-info" id="userInfo" style="display: none; color: #FFFFFF; font-weight: 600; margin-right: 10px;"></span>
+                <div class="balance-container" id="balanceContainer" style="display: none;">
+                    <span class="balance-label">💰 Balance:</span>
+                    <input type="number" class="balance-input" id="userBalance" value="0" min="0" readonly>
+                </div>
+                <a href="#" class="link-login" id="loginBtn" style="display: none;">Login</a>
+                <a href="#" class="btn-signup" id="signupBtn" style="display: none;">Sign Up</a>
+                <a href="#" class="btn-signup" id="logoutBtn" style="display: none;">Logout</a>
+            </div>
         </div>
-        <div class="nav-btns" id="navRight">
-            <span class="user-info" id="userInfo" style="display: none;"></span>
-            <button class="btn-primary" id="logoutBtn" style="display: none;">Logout</button>
-            <button class="btn-ghost" id="loginBtn" style="display: none;">Login</button>
-            <button class="btn-primary" id="signupBtn" style="display: none;">Sign Up</button>
-        </div>
-    </nav>
+    </header>
 
     <div class="container">
         <div class="auth-page" id="signupPage">
@@ -112,21 +131,58 @@
                         <div class="role-icon">🔍</div>
                         <h3>Client</h3>
                         <p>Post projects and hire skilled freelancers to get work done</p>
-                        <button class="btn btn-primary" onclick="authSystem.selectRole('client')">Choose Client</button>
+                        <button class="btn btn-primary role-select-btn" data-role="client" type="button">Choose Client</button>
                     </div>
                     <div class="role-card">
                         <div class="role-icon">💼</div>
                         <h3>Freelancer</h3>
                         <p>Offer your skills and services to clients worldwide</p>
-                        <button class="btn btn-primary" onclick="authSystem.selectRole('freelancer')">Choose Freelancer</button>
+                        <button class="btn btn-primary role-select-btn" data-role="freelancer" type="button">Choose Freelancer</button>
                     </div>
                     <div class="role-card">
                         <div class="role-icon">👨‍💼</div>
                         <h3>Admin</h3>
                         <p>Manage users and system settings</p>
-                        <button class="btn btn-primary" onclick="authSystem.selectRole('admin')">Choose Admin</button>
+                        <button class="btn btn-primary role-select-btn" data-role="admin" type="button">Choose Admin</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="auth-page" id="cardDataPage" style="display: none;">
+            <div class="auth-card card-data-card">
+                <h2>Card Data</h2>
+                <p class="role-description">Add your card details to finish setting up your account</p>
+                <form id="cardDataForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" required>
+                        <span class="error" id="cardNumberError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nameOnCard">Name on Card</label>
+                        <input type="text" id="nameOnCard" placeholder="John Doe" required>
+                        <span class="error" id="nameOnCardError"></span>
+                    </div>
+
+                    <div class="card-form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" inputmode="numeric" required>
+                            <span class="error" id="expiryDateError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="password" id="cvv" placeholder="123" maxlength="4" inputmode="numeric" required>
+                            <span class="error" id="cvvError"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="addAnotherCardBtn">Submit, Add New One</button>
+                </form>
             </div>
         </div>
 
@@ -196,37 +252,63 @@
         </div>
     </div>
 
-    <script src="/public/js/auth.js"></script>
+    <script src="/js/auth.js"></script>
 
-    <footer class="footer" style="margin-top:2rem;">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo">kroww</div>
-          <p class="footer-desc">Connecting skilled freelancers with people who need work done — safely and simply.</p>
+    <footer class="parent">
+        <div class="bg-pattern"></div>
+        
+        <div class="footer-container">
+            <!-- Left Info Section -->
+            <div class="info-section">
+                <div class="logo">KROWW</div>
+                <div class="hook">Where ambitious meets opportunity</div>
+                <div class="brief">
+                    We connect ambition with direction, bridging people to meaningful work and companies to the right talent.
+                    We don't just list jobs—we match skills with purpose, opening doors for candidates.
+                </div>
+            </div>
+            
+            <div class="interactive-section">
+
+                <!-- ✅ Form tag added -->
+                <form action="/search" method="GET" class="search-container">
+                    <div class="search">
+                        <input type="text" name="query" placeholder="Job Search">
+                    </div>
+                    <div class="search_button">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+                
+                <div class="links-container">
+                    <div class="list1">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="list2">
+                        <ul>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="list3">
+                        <ul>
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <a href="index.html">Home</a>
-          <a href="profile.html">Freelancer Profiles</a>
-        </div>
-        <div class="footer-col">
-          <h4>Account</h4>
-          <a href="dashboard.html">Dashboard</a>
-          <a href="chat.html">Messages</a>
-          <a href="payment.html">Payments</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="#">About Us</a>
-          <a href="#">How It Works</a>
-          <a href="#">Trust &amp; Safety</a>
-          <a href="#">Help Centre</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>© 2026 Kroww. All rights reserved.</span>
-        <span>Terms · Privacy · Cookies</span>
-      </div>
+        
+        <div class="hr"><hr></div>
     </footer>
 </body>
-</html>
