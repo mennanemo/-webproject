@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/UserAuth');
 const { VALID_ROLES, validateEmail } = require('../utils/validation');
 const { isAdminEligible, addAdminEmail } = require('../utils/adminEmails');
 
@@ -99,3 +99,4 @@ exports.createAdmin = async (req, res) => {
         res.status(500).json({ message: 'Failed to add admin email' });
     }
 };
+
