@@ -31,11 +31,5 @@ form.addEventListener('submit', function(e) {
     }
     
     
-    if(cvv.length < 3 || cvv.length > 4 || isNaN(cvv)) {
-        alert("Invalid CVV. Please enter 3 or 4 digits.");
-        return;
-    }
     
-    
-    alert("Payment processed successfully!");
 });
