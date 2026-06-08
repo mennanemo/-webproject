@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="../public/css/edit.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit</title>
+</head>     
+<body>
+  <div id="eandc">
+    <div id="container">
+  <a id="cancel" href="">Cancel</a>
+      <div id="imagecard">
+        <img id="bgimage" src="" alt="bgimg">
+        <div id="badge">+</div>
+        <img id="profileimg" src="" alt="profile pic">
+        <input type="file" id="pfpinput" accept="image/*" style="display:none" accept=".png,.jpg,.jpeg">
+        <input type="file" id="bginput" accept="image/*" style="display:none" accept=".png,.jpg,.jpeg">
+      </div>
+
+      <div id="editcont">
+        <form id="editf">
+
+          <label for="firstname">First Name: </label>
+          <input type="text" id="firstname" placeholder="First Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" maxlength="15"><br><br>
+
+          <label for="lastname">Last Name: </label>
+          <input type="text" id="lastname" placeholder="Last Name" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" maxlength="15"><br><br>
+
+          <label for="about" id="labelab">Introduce Yourself: </label><br>
+          <textarea id="about" placeholder="About"></textarea><br><br>
+
+          <div id="educationlist">
+            <div class="education-entry">
+               <label >Education: </label>  <label >Graduation Year: </label><br>
+              <input type="text" class="cssbar" placeholder="School / University" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" >
+
+            
+              <input type="text"   class="cssbar" placeholder="YYYY" maxlength="4" oninput="formatYear(this)" >
+              <button type="button" onclick="removeEntry(this)">Remove</button>
+            </div>
+            <button type="button"class="addbutt" onclick="addEducation()">+ Add Education</button>
+          </div>
+
+          <br><br>
+
+          <div id="explist">
+            <div class="exp-entry">
+               <label  >Experience: </label>  <label >Years of work: </label><br>
+              <input type="text"   class="cssbar"  placeholder=" Company" oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '')">
+              <input type="text"  class="cssbar" placeholder="YYYY-YYYY" maxlength="9" oninput="formatYearRange(this)">
+              <button type="button" onclick="removeEntry(this)">Remove</button>
+            </div>
+            <button type="button"class="addbutt" onclick="addExp()">+ Add Experience</button>
+          </div>
+
+
+<br><br>
+  <div id="skills">
+            <div class="skill-entry">
+               <label  >Skill: </label><br>
+              <input type="text"   class="cssbar"  placeholder="EX: Penteration Testing" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" >
+              <button type="button" onclick="removeEntry(this)">Remove</button>
+            </div>
+            <button type="button"class="addbutt" onclick="addSkill()">+ Add Skill</button>
+          </div>
+
+
+
+
+
+
+
+
+<br><br>
+
+
+          <div id="certlist">
+          <div class="certif-entry">
+           <label> ADD certificates:</label><br>
+            <input type="file" class="cssbar" accept=".png,.jpg,.jpeg ">
+             <button onclick="removeEntry(this)">Remove</button>
+          </div>
+          <button type="button" class="addbutt" onclick="addCert()">+ Add Certificates</button>
+
+          </div>
+
+
+
+
+
+            <br><br>
+  <button type="submit" id="submit"> Submit</button>
+ 
+  <br><br>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+
+  <script src="../public/js/edit.js"></script>
+</body>
+</html>
