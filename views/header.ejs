@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KROWW - Header</title>
+    <!-- Importing Outfit font from Google Fonts for logo alignment with footer -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/header.css">
+</head>
+<body>
+    <header class="parent-header">
+        <!-- Transparent background pattern matching footer -->
+        <div class="bg-pattern"></div>
+        
+        <div class="header-container">
+            <!-- Left Info Section / Logo -->
+            <div class="logo-section">
+                <div class="logo">KROWW</div>
+            </div>
+            
+            
+            <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Jobs</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+            </nav>
+            
+           
+            <div class="auth-section">
+                
+                <div class="balance-container">
+                    <span class="balance-label">💰 Balance:</span>
+                    <input type="number" class="balance-input" value="<%= amount %>" min="0"  readonly>
+                </div>
+
+                
+                
+                
+                
+                <a href="#" class="link-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KROWW - Card Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/card_data.css">
+</head>
+<body>
+<div class="container">
+<div class="payment-wrapper">
+<div class="form-card">
+<h1 class="form-title">Card Data</h1>
+
+<form action="/submit-card-data" method="POST" id="paymentForm">
+    <div class="input-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+    </div>
+
+    <div class="input-group">
+        <label for="nameOnCard">Name on Card</label>
+        <input type="text" id="nameOnCard" name="nameOnCard" placeholder="John Doe" required>
+    </div>
+
+    <div class="row">
+        <div class="input-group half">
+            <label for="expiryDate">Expiry Date</label>
+            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+        </div>
+
+        <div class="input-group half">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+        </div>
+    </div>
+
+    <input type="hidden" id="addAnother" name="addAnother" value="false">
+
+    <button type="submit" class="pay">Submit</button>
+    <button type="button" id="addAnotherBtn" class="pay-secondary">Submit, Add New One</button>
+</form>
+</div>
+</div>
+</div>
+    <script src="../JS/card_data.js"></script>
+</body>
+</html>
