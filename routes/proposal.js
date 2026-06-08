@@ -3,12 +3,7 @@
 const express    = require('express');
 const router     = express.Router();
 const controller = require('../controllers/proposalController');
-
-
-const protect = (req, res, next) => {
- req.user = { _id: 'placeholder_user_id' };
-  next();
-};
+const {protect} = require('../middleware/auth');
 
 router.post('/create', protect, controller.createProposal);
 
