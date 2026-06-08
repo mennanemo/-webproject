@@ -5,10 +5,12 @@ const loggedInRole = currentUser?.role;
  const readparam = new URLSearchParams(window.location.search);
 const id = readparam.get("id");
 
+
 fetch("/api/profile/"+ id)
 .then(hold=> hold.json())
 .then(user=>
 {
+
 
 if (loggedInId === user._id.toString() || loggedInRole === 'admin') {
 
@@ -78,7 +80,7 @@ if (loggedInId === user._id.toString()) {
 }
 
    document.getElementById("editpf").href="/views/editpf.html?id="+user._id;
-
+   document.getElementById("connectbut").href="/views/chat.html?id="+user._id;
 
 
 

@@ -140,15 +140,29 @@ function setType(t) {
   document.getElementById('btn-work').className = 'type-btn' + (t === 'work' ? ' active-work' : '');
 }
 
-function submitPost() {
-  const name  = document.getElementById('p-name').value.trim();
-  const title = document.getElementById('p-title').value.trim();
-  if (!name || !title) { showToast('Please fill in your name and title.'); return; }
-  showToast('Post submitted! ID will be assigned once saved.');
-  closeModal();
-  ['p-name','p-title','p-desc','p-skills','p-location'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+async function submitPost() {
+  const desc = document.getElementById('p-desc').value.trim();
+  if (!desc) { showToast('Please write something.'); return; }
+
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  if (!currentUser) { showToast('You must be logged in to post.'); return; }
+
+  try {
+    const res = await fetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: currentUser.id,
+        content: desc
+      })
+    });
+    if (!res.ok) throw new Error('Failed');
+    showToast('Post published!');
+    closeModal();
+    document.getElementById('p-desc').value = '';
+  } catch (err) {
+    showToast('Failed to publish. Try again.');
+  }
 }
 
 function countUp(el, target, duration) {

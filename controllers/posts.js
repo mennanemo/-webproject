@@ -3,6 +3,7 @@ const router = express.Router();
 const Post = require('../models/Post');
 
 
+
 router.get('/:userId', async (req, res) => {
   try {
     const posts = await Post.find({ user: req.params.userId });
