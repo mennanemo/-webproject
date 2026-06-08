@@ -3,9 +3,10 @@ const {
   getMessages, createMessage, uploadFile, respondToOffer
 } = require('../controllers/messageController');
 
-router.post('/upload', uploadFile); 
-router.get('/:conversationId', getMessages);
-router.post('/', createMessage);
-router.patch('/:id/offer', respondToOffer);
+const { protect } = require('../middleware/authMid');
+router.post('/upload', protect, uploadFile); 
+router.get('/:conversationId', protect, getMessages);
+router.post('/', protect, createMessage);
+router.patch('/:id/offer', protect, respondToOffer);
 
 module.exports = router;

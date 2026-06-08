@@ -3,7 +3,7 @@
 const express    = require('express');
 const router     = express.Router();
 const controller = require('../controllers/proposalController');
-const {protect} = require('../middleware/auth');
+const {protect} = require('../middleware/authMid');
 
 router.post('/create', protect, controller.createProposal);
 

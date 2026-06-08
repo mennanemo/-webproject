@@ -201,7 +201,7 @@ class AuthSystem {
 
             const fullName = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
             this.showMessage(`Welcome, ${fullName}!`, 'success');
-            this.navigateToDashboard();
+           window.location.href = 'http://localhost:3000/search.html';
         } catch (error) {
             this.showMessage('Error selecting role: ' + error.message, 'error');
         }
@@ -243,7 +243,7 @@ class AuthSystem {
             this.currentUser = data.user;
             this.saveSession(this.currentUser);
             this.showMessage('Login successful!', 'success');
-            this.navigateToDashboard();
+            window.location.href = '/search.html'; 
             return true;
         } catch (error) {
             if (error.message === 'Email not found') {
@@ -303,12 +303,7 @@ class AuthSystem {
     }
 
     navigateToDashboard() {
-        this.hidePage('signupPage');
-        this.hidePage('loginPage');
-        this.hidePage('roleSelectionPage');
-        this.showPage('dashboardPage');
-        this.updateDashboard();
-        this.updateNavBar();
+     window.location.href = '/search.html';
     }
 
     showPage(pageId) {

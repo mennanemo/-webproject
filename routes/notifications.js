@@ -4,7 +4,9 @@ const {
   markConversationRead
 } = require('../controllers/notificationsContoller');
 
-router.get('/', getNotifications);
-router.post('/mark-read', markConversationRead);
+const { protect } = require('../middleware/authMid');
+
+router.get('/', protect, getNotifications);
+router.post('/mark-read', protect, markConversationRead);
 
 module.exports = router;

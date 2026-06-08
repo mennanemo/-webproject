@@ -2,6 +2,7 @@ const path= require('path');
 const fs = require('fs');
 const multer = require('multer');
 const {v4: uuidv4} = require('uuid');
+const sanitize = require('sanitize-filename'); 
 const Message= require('../models/Message');
 const Conversation = require('../models/Conversation');
 
@@ -29,7 +30,7 @@ const fileFilter = (req,file,cb) => {
 };
 
 const upload = multer({ storage, fileFilter, limits:{fileSize:20*1024*1024}  });
-const sanitize = require('sanitize-filename');
+
 
 exports.getMessages = async (req, res) => {
   try {
@@ -43,7 +44,7 @@ exports.getMessages = async (req, res) => {
       .limit(limit)
       .then(msgs => msgs.reverse()); 
 
-      const userId = req.use.id;
+      const userId = req.user.id;
     if (userId) {
       await Message.updateMany(
         { conversationId: req.params.conversationId, senderId: { $ne: userId }, read: false },

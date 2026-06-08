@@ -33,6 +33,7 @@ app.get('/dashboard%20-%20admin.html', (req, res) => res.redirect('/dashboard-ad
 app.use('/api/users', require('./routes/users'));
 app.use('/api/conversations', require('./routes/conversations'));
 app.use('/api/messages', require('./routes/messages'));
+app.use('/api/auth', require('./routes/authRoutes')); 
 app.use('/api/proposal', require('./routes/proposal'));
 app.use('/api/reviews', require('./routes/review'));
 app.use('/api/notifications', require('./routes/notifications'));

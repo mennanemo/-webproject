@@ -1,10 +1,8 @@
 
 
-
 function isLoggedIn() {
-  
-  const token = localStorage.getItem('kroww_token');
-  const userData = localStorage.getItem('kroww_user');
+  const token = localStorage.getItem('authToken');
+  const userData = localStorage.getItem('currentUser');
   
   if (token && userData) {
     try {
@@ -20,7 +18,7 @@ function isLoggedIn() {
 
 
 function getCurrentUser() {
-  const userData = localStorage.getItem('kroww_user');
+  const userData = localStorage.getItem('currentUser');
   if (userData) {
     try {
       return JSON.parse(userData);
@@ -82,8 +80,8 @@ function updateNavigationForUser(user) {
 
 
 function handleLogout() {
-  localStorage.removeItem('kroww_token');
-  localStorage.removeItem('kroww_user');
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('currentUser');
   window.location.reload();
 }
 

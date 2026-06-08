@@ -4,7 +4,9 @@ const {
   createConversation
 } = require('../controllers/conversationController');
 
-router.get('/',   getConversations);
-router.post('/',  createConversation);
+const { protect } = require('../middleware/authMid');
+
+router.get('/', protect, getConversations);
+router.post('/', protect, createConversation);
 
 module.exports = router;

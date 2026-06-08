@@ -1,7 +1,17 @@
 const API_URL= '/api';
 const SOCKET_URL = window.location.origin;
 
-let MY_USER_ID = localStorage.getItem('kroww_user_id') || '';
+
+let MY_USER_ID = '';
+const currentUser = localStorage.getItem('currentUser');
+if (currentUser) {
+  try {
+    const user = JSON.parse(currentUser);
+    MY_USER_ID = user.id || user._id;
+  } catch(e) {
+    MY_USER_ID = '';
+  }
+}
 
 const socket = io(SOCKET_URL);
 let activeConvId = null;
@@ -328,7 +338,7 @@ async function createProposal() {
   }
   
   
-  const userData = localStorage.getItem('kroww_user');
+const userData = localStorage.getItem('currentUser');
   if (!userData) {
     showToastMessage('Please log in first');
     return;

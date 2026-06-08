@@ -3,7 +3,7 @@ const Conversation = require('../models/Conversation');
 
 exports.getNotifications = async (req, res) => {
   try {
-    const userId = req.use.id;
+    const userId = req.user.id;
 
     if (!userId) return res.status(400).json({ error: 'userId required' });
 

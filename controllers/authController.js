@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const { signToken } = require('../middleware/auth');
+const User = require('../models/UserAuth');
+const { signToken } = require('../middleware/authMid');
 const { validateEmail, validatePassword, validateName, validatePhone } = require('../utils/validation');
 
 exports.signup = async (req, res) => {
