@@ -36,6 +36,9 @@ app.use('/api/messages', require('./routes/messages'));
 app.use('/api/proposal', require('./routes/proposal'));
 app.use('/api/reviews', require('./routes/review'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/profile', require('./routes/profile'));
+app.use('/api/admin', require('./routes/admin'));
 
 
 app.get('/', (req, res) => res.json({ status: 'Kroww API running' }));
